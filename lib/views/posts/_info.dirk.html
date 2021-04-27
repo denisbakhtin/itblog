@@ -1,0 +1,15 @@
+@import 'package:itblog/models/data.dart';
+@type Post
+
+<div class="card card-block bg-faded flex-row post-info">
+  <span class="post-info-item">
+    <a href="#comments"><i class="mdi mdi-comment"></i> @(model.comments?.length ?? 0)</a>
+  </span>
+  <span class="post-info-item">
+		@{var length = model.tags?.length ?? 0;}
+		@for (var i = 0; i < length; i++) {
+			@{var tag = model.tags![i];}
+      <a href="@tag.url" class="label label-success"><i class="mdi mdi-pound"></i>@tag.title</a>
+		}
+  </span>
+</div>

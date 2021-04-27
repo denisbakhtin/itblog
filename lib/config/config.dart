@@ -1,20 +1,28 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:json_annotation/json_annotation.dart';
+import 'package:itblog/models/helpers.dart';
 
-part 'config.g.dart';
+//application mode
+enum Mode { debug, test, release }
 
-@JsonSerializable()
 class Config {
-  final String connection;
-  static const _path = 'lib/config/config.json';
+  final int port;
+  final String database;
+  final String cookieSecret;
 
-  Config(this.connection);
-  factory Config.load() {
-    var contents = File(_path).readAsStringSync();
-    return Config.fromJson(json.decode(contents));
+  Config(this.port, this.database, this.cookieSecret);
+  factory Config.load(Mode mode) {
+    final _modeStr = mode.toString().split('.').last;
+    final _path = 'lib/config/config_$_modeStr.json';
+    var _contents = File(_path).readAsStringSync();
+    return Config._fromJson(json.decode(_contents));
   }
-  factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
-  Map<String, dynamic> toJson() => _$ConfigToJson(this);
+  factory Config._fromJson(Map<String, dynamic> map) {
+    return Config(
+      toInt(map['port']),
+      toStr(map['database']),
+      toStr(map['cookie_secret']),
+    );
+  }
 }

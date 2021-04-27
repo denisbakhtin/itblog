@@ -3,14 +3,14 @@ const LiveReloadPlugin = require('webpack-livereload-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const devMode = process.env.NODE_ENV !== 'production';
+//const devMode = process.env.NODE_ENV !== 'production';
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: './assets/js/application.js',
+    entry: './lib/assets/js/application.js',
     output: {
         filename: 'application.js',
-        path: path.resolve(__dirname, 'public/assets')
+        path: path.resolve(__dirname, 'lib/public/assets')
     },
     devtool: "source-map",
     watchOptions: {
@@ -51,7 +51,11 @@ module.exports = {
         },
         {
             test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "url-loader?limit=10000&mimetype=application/font-woff"
+            loader: "url-loader",
+						options: {
+							limit: 10000,
+							mimetype: "application/font-woff",
+						}
         },
         {
             test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -87,7 +91,7 @@ module.exports = {
         }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: 'assets/images', to: '../images' },
+                { from: 'lib/assets/images', to: '../images' },
             ],
         }),
     ]

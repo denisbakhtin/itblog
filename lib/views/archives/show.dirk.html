@@ -1,0 +1,12 @@
+@import 'package:itblog/models/data.dart';
+@type List<Post>
+
+<div class="container" role="main">
+	@renderPartial("shared/_sidebar")
+  <div id="main-column">
+    <h2>@(viewData["title"])</h2>
+		@for (var i = 0; i < model.length; i++) {
+			@renderPartial("posts/_preview", model[i])
+	  }
+  </div>
+</div>

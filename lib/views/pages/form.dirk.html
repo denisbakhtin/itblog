@@ -1,0 +1,36 @@
+@import 'package:itblog/models/data.dart'
+@type Page
+
+<div class="content-wrapper">
+	@renderPartial("dashboard/_sidebar")
+  <div class="main-content" role="main">
+    <form method="post">
+      <fieldset>
+        <legend>{{.Title}}</legend>
+				@renderPartial("shared/_messages")
+        <input type="hidden" name="id" value="@model.id">
+        
+        <div class="form-group">
+          <label class="control-label" for="title">Заголовок</label>
+          <input id="title" name="title" value="@model.title" class="form-control" required="" >
+        </div>
+
+        <div class="form-group">
+          <label class="control-label" for="ck-content">Содержание</label>
+          <textarea name="content" id="ck-content">@model.content</textarea>
+        </div>
+
+        <div class="form-group">
+					<input id="published" name="published" type="checkbox" value="1" @if (model.published == 1) {checked} >
+          <label class="control-label" for="published">Опубликовать</label>
+        </div>
+
+        <div class="form-group">
+          <input type="submit" class="btn btn-primary" value="Отправить">
+          <a class="btn btn-secondary" href="/admin/pages">Отмена</a>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+<script src="/public/assets/ckeditor/build/ckeditor.js"></script>

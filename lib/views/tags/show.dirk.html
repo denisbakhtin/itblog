@@ -1,0 +1,12 @@
+@import 'package:itblog/models/data.dart';
+@type Tag
+
+<div class="container" role="main">
+	@renderPartial("dashboard/_sidebar")
+  <div id="main-column">
+    <h2><i class="mdi mdi-pound"></i>@model.title</h2>
+		@for(var i = 0; i < model.posts.length; i++) {
+			@renderPartial("posts/_preview", model.posts[i])
+	  }
+  </div>
+</div>

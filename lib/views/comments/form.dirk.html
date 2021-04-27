@@ -1,0 +1,36 @@
+@import 'package:itblog/models/data.dart';
+@type Comment
+
+<div class="content-wrapper">
+	@renderPartial("dashboard/_sidebar")
+  <div class="main-content" role="main">
+    <form method="post">
+      <fieldset>
+        <legend>@(viewData["title"])</legend>
+				@renderPartial("shared/_messages")
+        <input type="hidden" name="id" value="@model.id" >
+        
+        <div class="form-group">
+          <label class="control-label" for="content">Content</label>
+          <textarea name="content" class="form-control" id="content">@model.content</textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label" for="post_id">Post: @model.post?.title</label>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label" for="user_name">Пользователь: @model.userName</label>
+        </div>
+
+        <div class="form-group">
+					<input id="published" name="published" type="checkbox" value="1" @if (model.published == 1) {checked} >
+          <label class="control-label" for="published">Опубликовать</label>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Отправить">
+        <a class="btn btn-secondary" href="/admin/comments">Отмена</a>
+      </fieldset>
+    </form>
+  </div>
+</div>

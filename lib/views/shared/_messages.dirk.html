@@ -1,0 +1,4 @@
+@{var messages = getSessionMessages();}
+@for(var i = 0; i < messages.length; i++) {
+	<div class="alert alert-danger col-sm-12">@messages[i]</div>
+}

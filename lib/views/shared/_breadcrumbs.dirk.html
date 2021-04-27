@@ -1,0 +1,21 @@
+@import 'package:itblog/models/data.dart';
+@type List<Breadcrumb>
+
+@if (model.length > 0) {
+	<nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+			<div class="container">
+					<ol class="breadcrumb">
+							@for(var i = 0; i < model.length; i++) {
+								@{var crumb = model[i];}
+								@if (crumb.url.isNotEmpty) {
+										<li class="breadcrumb-item">
+											<a href="/">@crumb.title</a>
+										</li>
+								} else {
+										<li class="breadcrumb-item active" aria-current="page">@crumb.title</li>
+								}
+							}
+					</ol>
+			</div>
+	</nav>
+}

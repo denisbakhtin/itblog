@@ -3,18 +3,25 @@ description: My IT blog
 version: 0.0.2
 author: Denis Bakhtin <denis.bakhtin@gmail.com>
 homepage: https://github.com/denisbakhtin/itblog-dart
+publish_to: none
 
 environment:
   sdk: ">=2.12.0 <3.0.0" 
 
 dependencies:
-  shelf: ^1.1.0
+  shelf: ^1.1.1
   shelf_router: ^1.0.0
   shelf_static: ^1.0.0
+  shelf_secure_cookie: ^1.0.0
   path:
+  sqlite3: ^1.1.0
+  translit: ^2.0.0
+  crypto: ^3.0.1
+  shelf_body_parser:
+    git: https://github.com/unger1984/shelf_body_parser
 dev_dependencies:
-  json_serializable: ^4.0.3
-  build_runner: ^1.12.2
+  build_runner: ^2.0.1
   injector: ^2.0.0
-  test:
-  mockito:
+  test: ^1.17.2
+  dirk:
+    git: https://github.com/denisbakhtin/dirk

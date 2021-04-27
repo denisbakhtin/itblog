@@ -2,9 +2,7 @@
   "name": "ginblog",
   "version": "1.0.0",
   "description": "GIN-powered blog boilerplate",
-  "dependencies": {
-    "webpack-cli": "^4.6.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.13.14",
     "@babel/preset-env": "^7.13.12",
@@ -27,6 +25,7 @@
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0",
     "webpack-livereload-plugin": "^3.0.1",
     "xhook": "^1.4.9"
   },

@@ -3,9 +3,9 @@ import 'package:test/test.dart';
 
 void main() {
   test("Parses config.json", () {
-    var c = Config.load();
-    //c is unnullable, nothing to test :)
-    //c.connection is unnullable
-    assert(c.connection.length > 0);
+    var c = Config.load(Mode.test);
+    assert(c.port > 0);
+    assert(c.database.length > 0);
+    assert(c.cookieSecret.length > 0);
   });
 }

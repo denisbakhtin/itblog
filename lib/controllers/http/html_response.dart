@@ -1,3 +1,4 @@
+import 'package:itblog/views/views.dart';
 import 'package:shelf/shelf.dart';
 
 class HtmlResponse extends Response {
@@ -14,13 +15,21 @@ class HtmlResponse extends Response {
       : super(403,
             headers: _adjustHtmlHeaders(headers), body: body, context: context);
 
-  //TODO: return a 404 error html page
   HtmlResponse.notFound(
       {body,
       Map<String, Object> headers = const {},
       Map<String, Object> context = const {}})
       : super(404,
-            headers: _adjustHtmlHeaders(headers), body: body, context: context);
+            headers: _adjustHtmlHeaders(headers),
+            body: body ?? Errors404View(),
+            context: context);
+
+  HtmlResponse.movedPermanently(Object location,
+      {body,
+      Map<String, Object> headers = const {},
+      Map<String, Object> context = const {}})
+      : super.movedPermanently(location,
+            body: body, headers: _adjustHtmlHeaders(headers), context: context);
 
   HtmlResponse.internalServerError(
       {body,

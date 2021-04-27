@@ -1,0 +1,45 @@
+@import 'package:itblog/models/data.dart'
+@type List<Page>
+
+<div class="content-wrapper">
+	@renderPartial("shared/_sidebar")
+  <div class="main-content" role="main">
+    <h2>@(viewData["title"])</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="shrink">№</th>
+          <th>Заголовок</th>
+          <th class="shrink">Опубликовано</th>
+          <th class="shrink">Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+				@for (var i = 0; i < model.length; i++) {
+					@{var page = model[i];}
+          <tr>
+            <td class="shrink">@page.id</td>
+            <td>@page.title</td>
+            <td class="shrink">
+							@if (page.published == 1) {
+								<span class="mdi mdi-check"></span>
+							} else {
+								<span class="mdi mdi-minus"></span>
+							}
+            </td>
+            <td class="shrink">
+              <a href="@page.url" class="btn btn-sm btn-secondary"><i class="mdi mdi-eye"></i></a>
+              <a href="@page.editUrl" class="btn btn-sm btn-primary"><i class="mdi mdi-pencil"></i></a>
+              <form class="inline-block" action="@page.deleteUrl" method="post">
+                <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);"><i class="mdi mdi-delete"></i></button>
+              </form>
+            </td>
+          </tr>
+				}
+      </tbody>
+    </table>
+    <div class="actions">
+      <a href="@Page.newUrl" class="btn btn-primary">Новая страница</a>
+    </div>
+  </div>
+</div>

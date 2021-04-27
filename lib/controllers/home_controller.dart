@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:itblog/views/views.dart';
+
 import 'http/shelf.dart';
 
 class HomeController {
@@ -14,6 +18,6 @@ class HomeController {
 //    return router;
 //  }
   static Future<Response> Index(Request request) async {
-    return HtmlResponse.ok('Home page design #2');
+    return HtmlResponse.ok(HomeShowView(viewData: {'title': 'Home page'}));
   }
 }

@@ -1,0 +1,36 @@
+@{var user = getActiveUser();}
+<aside class="dashboard-sidebar">
+  <div class="well well-sm user-info">
+    <h5>Профиль</h5>
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle text-uppercase" type="button" id="dropdownSettingsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="mdi mdi-cogs mr-1"></i>настройки
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownSettingsButton">
+        <a class="dropdown-item" href="/admin/users/@user.id/edit"><i class="mdi mdi-pencil mr-1"></i>Редактировать</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/logout"><i class="mdi mdi-logout mr-1"></i>Выйти</a>
+      </div>
+    </div>
+    <span class="email">@user.email</span>
+  </div>
+
+  <h5>Навигация</h5>
+  <ul class="nav flex-column nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/posts"><i class="mdi mdi-message-text-outline mr-3"></i>Записи</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/tags"><i class="mdi mdi-tag-multiple mr-3"></i>Тэги</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/comments"><i class="mdi mdi-comment-multiple mr-3"></i>Комментарии</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/pages"><i class="mdi mdi-message-text mr-3"></i>Страницы</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/users"><i class="mdi mdi-account-multiple mr-3"></i>Пользователи</a>
+    </li>
+  </ul>
+</aside>

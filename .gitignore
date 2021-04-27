@@ -1,5 +1,8 @@
 config/config.json
-node_modules/
+node_modules
 itblog
-tmp
 .dart_tool
+.task
+pubspec.lock
+.packages
+TODO
