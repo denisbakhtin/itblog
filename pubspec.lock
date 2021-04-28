@@ -174,7 +174,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "044c1cdc86c6159119a43efea1528d862f150905"
+      resolved-ref: "0f88dc97a65ebfd0dde403851321944adb310d12"
       url: "https://github.com/denisbakhtin/dirk"
     source: git
     version: "0.0.5"
@@ -379,8 +379,8 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "1b6561835baac06546acc278497977bce2c74b05"
-      url: "https://github.com/unger1984/shelf_body_parser"
+      resolved-ref: "721d2fd2ba1612b4cdcf2eedc1a3ab12f4304030"
+      url: "https://github.com/denisbakhtin/shelf_body_parser"
     source: git
     version: "1.0.7"
   shelf_packages_handler:
@@ -400,10 +400,10 @@ packages:
   shelf_secure_cookie:
     dependency: "direct main"
     description:
-      name: shelf_secure_cookie
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
+      path: "../shelf-secure-cookie"
+      relative: true
+    source: path
+    version: "1.0.6"
   shelf_static:
     dependency: "direct main"
     description:

@@ -14,6 +14,11 @@ class User {
 
   bool hasPassword(String pass) => password == toCryptoHash(pass);
 
+  void validate() {
+    if (email.isEmpty || name.isEmpty || password.isEmpty)
+      throw NotValidException();
+  }
+
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: toInt(map['id']),

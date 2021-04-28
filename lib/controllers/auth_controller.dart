@@ -1,4 +1,3 @@
-import 'package:itblog/config/config.dart';
 import 'package:itblog/models/data.dart';
 import 'package:itblog/views/views.dart';
 import 'package:shelf_secure_cookie/shelf_secure_cookie.dart';
@@ -16,7 +15,6 @@ class AuthController {
 
   static Future<Response> DoSignin(Request request) async {
     final db = Injector.appInstance.get<DB>();
-    final config = Injector.appInstance.get<Config>();
     try {
       final form = request.context['postParams'] as Map<String, dynamic>;
       final model = SigninVM.fromMap(form);
@@ -26,7 +24,6 @@ class AuthController {
       await cookies.setEncrypted(
         "user",
         u.id.toString(),
-        config.cookieSecret,
         path: '/',
         expires: DateTime.now().add(Duration(days: 30)),
       );
@@ -41,7 +38,6 @@ class AuthController {
 
   static Future<Response> Signup(Request request) async {
     var query = request.context['query'] as Map<String, dynamic>;
-    print('Is this even real');
     return HtmlResponse.ok(AuthSignupView(viewData: {
       'title': 'Регистрация',
       'error': query['error'],
@@ -49,25 +45,22 @@ class AuthController {
   }
 
   static Future<Response> DoSignup(Request request) async {
-    print('123');
     final db = Injector.appInstance.get<DB>();
-    final config = Injector.appInstance.get<Config>();
     try {
       final form = request.context['postParams'] as Map<String, dynamic>;
-      final user = User.fromSignupMap(form);
-      print('234');
+      final user = User.fromSignupMap(form)..validate();
       final u = db.createUser(user);
       final cookies = request.context['cookies'] as CookieParser;
       await cookies.setEncrypted(
         "user",
         u.id.toString(),
-        config.cookieSecret,
         path: '/',
         expires: DateTime.now().add(Duration(days: 30)),
       );
       return HtmlResponse.movedPermanently("/admin/posts");
+    } on NotValidException {
+      return HtmlResponse.movedPermanently("/signup?error=2");
     } on ExistsException {
-      print('Exists Exception!!');
       return HtmlResponse.movedPermanently("/signup?error=1");
     } catch (e) {
       return HtmlResponse.internalServerError(body: e.toString());

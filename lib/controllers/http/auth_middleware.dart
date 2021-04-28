@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:itblog/config/config.dart';
 import 'package:itblog/models/data.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf_secure_cookie/shelf_secure_cookie.dart';
@@ -21,10 +20,8 @@ shelf.Middleware authParser() {
         if (accept.contains("text/html")) {
           try {
             CookieParser cookies = request.context['cookies'] as CookieParser;
-            final config = Injector.appInstance.get<Config>();
             final db = Injector.appInstance.get<DB>();
-            final userId =
-                await cookies.getEncrypted("user", config.cookieSecret);
+            final userId = await cookies.getEncrypted("user");
             if (userId != null) {
               final user = db.user(toInt(userId.value));
               return innerHandler(request.change(context: {'user': user}));

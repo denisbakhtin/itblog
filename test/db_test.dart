@@ -330,6 +330,33 @@ void main() {
   });
 
   //____________________ USERS _______________________
+  test("Validates a user model", () {
+    var u = User(name: 'User Name', email: 'me@email.com', password: '23456');
+    //does not throw
+    u.validate();
+    u = User(email: 'me@email.com', password: '23456');
+    try {
+      u.validate();
+      expect(true, false, reason: "Should throw");
+    } on NotValidException {} catch (e) {
+      expect(true, false, reason: e.toString());
+    }
+    u = User(name: 'User Name', password: '23456');
+    try {
+      u.validate();
+      expect(true, false, reason: "Should throw");
+    } on NotValidException {} catch (e) {
+      expect(true, false, reason: e.toString());
+    }
+    u = User(name: 'User Name', email: 'me@email.com');
+    try {
+      u.validate();
+      expect(true, false, reason: "Should throw");
+    } on NotValidException {} catch (e) {
+      expect(true, false, reason: e.toString());
+    }
+  });
+
   test("Creates a new user in db", () {
     var listBefore = db.users();
     var u = User(name: 'User Name', email: 'me@email.com', password: '23456');

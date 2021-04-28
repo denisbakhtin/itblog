@@ -17,7 +17,7 @@ run:
 
 build_runner_watch:
 	@echo "Running build_runner watch"
-	@pub run build_runner watch
+	@pub run build_runner watch --delete-conflicting-outputs
 
 #all-in-one ansible command for deployment
 deploy:

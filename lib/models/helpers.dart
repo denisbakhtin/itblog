@@ -7,6 +7,11 @@ class DBException implements Exception {
   DBException(this.cause);
 }
 
+class NotValidException implements DBException {
+  String cause;
+  NotValidException() : this.cause = "Model not valid";
+}
+
 class NotFoundException implements DBException {
   String cause;
   NotFoundException() : this.cause = "Record not found";

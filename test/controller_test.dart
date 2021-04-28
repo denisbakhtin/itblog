@@ -235,10 +235,43 @@ void main() async {
     expect(user.name, "Denis");
     expect(user.email, "user@admin.com");
     expect(user.hasPassword("123456"), true);
-    final cp = CookieParser.fromCookieValue(response.headers["set-cookie"]);
-    final cookie = await cp.getEncrypted("user", config.cookieSecret);
+    final cp = CookieParser.fromCookieValue(
+        response.headers["set-cookie"], config.cookieSecret);
+    final cookie = await cp.getEncrypted("user");
     expect(cookie != null, true);
     expect(cookie!.value, user.id.toString());
+  });
+
+  test("/signup validates form", () async {
+    var users = db.users();
+    Response response = await router(Request(
+        'POST', Uri.parse('http://localhost:8080/signup'),
+        body: "email=newuser@admin.com&password=123456",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}));
+    await expectStatusCode(301, response);
+    expect(response.headers['location'], '/signup?error=2');
+
+    response = await router(Request(
+        'POST', Uri.parse('http://localhost:8080/signup'),
+        body: "password=123456@name=denis",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}));
+    await expectStatusCode(301, response);
+    expect(response.headers['location'], '/signup?error=2');
+
+    response = await router(Request(
+        'POST', Uri.parse('http://localhost:8080/signup'),
+        body: "email=newuser@admin.com&name=denis",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}));
+    await expectStatusCode(301, response);
+    expect(response.headers['location'], '/signup?error=2');
+
+    final usersAfter = db.users();
+    expect(usersAfter.length, users.length);
+
+    final cp = CookieParser.fromCookieValue(
+        response.headers["set-cookie"], config.cookieSecret);
+    final cookie = await cp.getEncrypted("user");
+    expect(cookie, null);
   });
 
   test("/signup fails to create existing user", () async {
@@ -260,8 +293,9 @@ void main() async {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}));
     await expectStatusCode(301, response);
     expect(response.headers["location"], "/admin/posts");
-    final cp = CookieParser.fromCookieValue(response.headers["set-cookie"]);
-    final cookie = await cp.getEncrypted("user", config.cookieSecret);
+    final cp = CookieParser.fromCookieValue(
+        response.headers["set-cookie"], config.cookieSecret);
+    final cookie = await cp.getEncrypted("user");
     expect(cookie != null, true);
     expect(cookie!.value.length > 0, true);
   });
@@ -273,8 +307,9 @@ void main() async {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}));
     await expectStatusCode(301, response);
     expect(response.headers["location"], "/signin?error=1");
-    final cp = CookieParser.fromCookieValue(response.headers["set-cookie"]);
-    final cookie = await cp.getEncrypted("user", config.cookieSecret);
+    final cp = CookieParser.fromCookieValue(
+        response.headers["set-cookie"], config.cookieSecret);
+    final cookie = await cp.getEncrypted("user");
     expect(cookie, null);
 
     final Response response2 = await router(Request(
@@ -283,8 +318,9 @@ void main() async {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}));
     await expectStatusCode(301, response2);
     expect(response2.headers["location"], "/signin?error=1");
-    final cp2 = CookieParser.fromCookieValue(response2.headers["set-cookie"]);
-    final cookie2 = await cp2.getEncrypted("user", config.cookieSecret);
+    final cp2 = CookieParser.fromCookieValue(
+        response2.headers["set-cookie"], config.cookieSecret);
+    final cookie2 = await cp2.getEncrypted("user");
     expect(cookie2, null);
   });
 

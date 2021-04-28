@@ -1,3 +1,4 @@
+import 'package:itblog/config/config.dart';
 import 'package:shelf_secure_cookie/shelf_secure_cookie.dart';
 import 'package:shelf_static/shelf_static.dart';
 
@@ -72,9 +73,10 @@ class BlogRouter {
     // that matches everything to catch app.
     router.all(r'/<ignored|.*>', (Request request) => HtmlResponse.notFound());
 
+    final config = Injector.appInstance.get<Config>();
     var handler = const Pipeline()
         .addMiddleware(bodyParser(storeOriginalBuffer: false))
-        .addMiddleware(cookieParser())
+        .addMiddleware(cookieParser(config.cookieSecret))
         .addMiddleware(authParser())
         .addHandler(router);
 
