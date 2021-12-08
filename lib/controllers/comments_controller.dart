@@ -1,30 +1,72 @@
+import 'package:itblog/controllers/helpers.dart';
+import 'package:itblog/models/data.dart';
+import 'package:itblog/views/views.dart';
+
 import 'http/shelf.dart';
 
 class CommentsController {
-  static Future<Response> Index(Request request) async {
-    return HtmlResponse.ok('["comment1"]');
-  }
+  Router get router {
+    final router = Router();
 
-  static Future<Response> Details(Request request, int id) async {
-    if (id == 'comment1') {
-      return HtmlResponse.ok('user1');
-    }
-    return HtmlResponse.notFound();
-  }
+    router.get('/new/<postId>', (Request request, String postId) async {
+      throw Error404();
+    });
 
-  static Future<Response> Create(Request request, int postId) async {
-    return HtmlResponse.notFound();
+    return router;
   }
+}
 
-  static Future<Response> Edit(Request request, int id) async {
-    return HtmlResponse.notFound();
-  }
+class AdminCommentsController {
+  Router get router {
+    final router = Router();
 
-  static Future<Response> Update(Request request, int id) async {
-    return HtmlResponse.notFound();
-  }
+    router.get('/', (Request request) async {
+      final db = Injector.appInstance.get<DB>();
+      final list = db.comments();
+      var vd = viewData(request);
+      return Response.ok(CommentsIndexView(list, viewData: vd));
+    });
 
-  static Future<Response> Delete(Request request, int id) async {
-    return HtmlResponse.notFound();
+    router.get('/new', (Request request) async {
+      var vd = viewData(request);
+      return Response.ok(CommentsFormView(Comment(), viewData: vd));
+    });
+
+    router.post('/new', (Request request) async {
+      final db = Injector.appInstance.get<DB>();
+      final form = request.context['postParams'] as Map<String, dynamic>;
+      final comment = Comment.fromMap(form);
+      db.createComment(comment);
+      return Response.movedPermanently("/admin/comments");
+    });
+
+    router.get('/edit/<id>', (Request request, String id) async {
+      final db = Injector.appInstance.get<DB>();
+      try {
+        final comment = db.comment(toInt(id));
+        var vd = viewData(request);
+        return Response.ok(CommentsFormView(comment, viewData: vd));
+      } on NotFoundException {
+        throw Error404();
+      } catch (e) {
+        throw Error500(e.toString());
+      }
+    });
+
+    router.post('/edit/<id>', (Request request, String id) async {
+      final db = Injector.appInstance.get<DB>();
+      final form = request.context['postParams'] as Map<String, dynamic>;
+      final comment = Comment.fromMap(form);
+      db.updateComment(comment);
+      return Response.movedPermanently("/admin/comments");
+    });
+
+    router.post('/delete/<id>', (Request request, String id) async {
+      final db = Injector.appInstance.get<DB>();
+      db.deleteComment(toInt(id));
+      return Response.movedPermanently("/admin/comments");
+    });
+
+    return router;
   }
 }

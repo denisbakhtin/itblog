@@ -119,7 +119,7 @@ void main() {
   //____________________ POSTS _______________________
   test("Creates a new post in db", () {
     var listBefore = db.posts();
-    var post = Post(title: 'Post title', content: 'Content');
+    var post = Post(title: 'Post title', content: 'Content', published: 1);
     var count = db.createPost(post);
     expect(count, 1);
     var listAfter = db.posts();
@@ -134,11 +134,24 @@ void main() {
       expect(p.title.length > 0, true);
       expect(p.content.length > 0, true);
       expect(p.slug.length > 0, true);
+      expect(p.created, isNotNull);
     });
     var listP = db.posts(published: 1);
     expect(listP.indexWhere((p) => p.published == 0), -1);
     var listU = db.posts(published: 0);
     expect(listU.indexWhere((p) => p.published == 1), -1);
+  });
+
+  test("Reads recent posts from db", () {
+    var list = db.recentPosts();
+    expect(list.length > 0 && list.length <= 4, true);
+    list.forEach((p) {
+      expect(p.id > 0, true);
+      expect(p.title.length > 0, true);
+      expect(p.content.length > 0, true);
+      expect(p.slug.length > 0, true);
+      expect(p.published == 1, true);
+    });
   });
 
   test("Reads post from db", () {
@@ -436,6 +449,129 @@ void main() {
     expect(count, 1);
     try {
       db.user(u.id);
+      expect(false, true, reason: 'Should throw a NotFoundException');
+    } on NotFoundException {} catch (e) {
+      expect(false, true, reason: 'Should throw a NotFoundException');
+    }
+  });
+
+  //____________________ SUBSCRIBER _______________________
+  test("Creates a new subscriber in db", () {
+    var listBefore = db.subscribers();
+    var ms = DateTime.now().microsecondsSinceEpoch;
+    var s = Subscriber(email: 'my_$ms@email.com');
+    var count = db.createSubscriber(s);
+    expect(count, 1);
+    var listAfter = db.subscribers();
+    expect(listAfter.length, listBefore.length + 1);
+  });
+
+  test("Reads subscribers from db", () {
+    var list = db.subscribers();
+    expect(list.length > 0, true);
+    list.forEach((s) {
+      expect(s.id > 0, true);
+      expect(s.email.length > 0, true);
+      expect(s.email, s.email.toLowerCase().trim());
+    });
+  });
+
+  test("Reads subscriber from db", () {
+    var s = Subscriber(
+      email: 'some@email.com',
+    );
+    db.createSubscriber(s);
+
+    var s2 = db.subscribers().last;
+    expect(s2.id > 0, true);
+    expect(s2.email, s.email);
+    expect(s2.created, isNotNull);
+  });
+
+  test("Updates a subscriber in db", () {
+    var s = db.subscribers().last;
+    var newS = Subscriber(
+      id: s.id,
+      email: s.email + "upd",
+      createdAt: s.createdAt,
+    );
+    var count = db.updateSubscriber(newS);
+    expect(count, 1);
+    var updatedS = db.subscriber(s.id);
+    expect(updatedS.id, newS.id);
+    expect(updatedS.email, newS.email);
+    expect(updatedS.created, newS.created);
+  });
+
+  test("Deletes a subscriber in db", () {
+    var s = db.subscribers().last;
+    var count = db.deleteSubscriber(s.id);
+    expect(count, 1);
+    try {
+      db.subscriber(s.id);
+      expect(false, true, reason: 'Should throw a NotFoundException');
+    } on NotFoundException {} catch (e) {
+      expect(false, true, reason: 'Should throw a NotFoundException');
+    }
+  });
+
+  //____________________ MAILING _______________________
+  test("Creates a new mailing in db", () {
+    var listBefore = db.mailings();
+    var m = Mailing(title: 'first title', content: 'first content');
+    var count = db.createMailing(m);
+    expect(count, 1);
+    var listAfter = db.mailings();
+    expect(listAfter.length, listBefore.length + 1);
+  });
+
+  test("Reads mailings from db", () {
+    var list = db.mailings();
+    expect(list.length > 0, true);
+    list.forEach((m) {
+      expect(m.id > 0, true);
+      expect(m.title, isNotEmpty);
+      expect(m.content, isNotEmpty);
+    });
+  });
+
+  test("Reads mailing from db", () {
+    var m = Mailing(
+      title: 'second title',
+      content: 'second content',
+    );
+    db.createMailing(m);
+
+    var m2 = db.mailings().last;
+    expect(m2.id > 0, true);
+    expect(m2.title, m.title);
+    expect(m2.content, m.content);
+    expect(m2.created, isNotNull);
+  });
+
+  test("Updates a mailing in db", () {
+    var m = db.mailings().last;
+    var newM = Mailing(
+      id: m.id,
+      title: m.title + "upd",
+      content: m.content + "upd",
+      createdAt: m.createdAt,
+    );
+    var count = db.updateMailing(newM);
+    expect(count, 1);
+    var updatedM = db.mailing(m.id);
+    expect(updatedM.id, newM.id);
+    expect(updatedM.title, newM.title);
+    expect(updatedM.content, newM.content);
+    expect(updatedM.created, newM.created);
+  });
+
+  test("Deletes a mailing in db", () {
+    var m = db.mailings().last;
+    var count = db.deleteMailing(m.id);
+    expect(count, 1);
+    try {
+      db.mailing(m.id);
       expect(false, true, reason: 'Should throw a NotFoundException');
     } on NotFoundException {} catch (e) {
       expect(false, true, reason: 'Should throw a NotFoundException');

@@ -1,22 +1,10 @@
 @import 'package:itblog/models/data.dart';
 @type Post;
 
-<div class="post-preview mb-4">
-	@{var img = model.getImage();}
-	@if (img.isNotEmpty) {
-		<a href="@model.url" class="d-block"><img src="@img" class="img-fluid" alt="@model.title" /></a>
-	}
-	<a href="@model.url"><h2>@model.title</h2></a>
-	<p class="excerpt">@model.excerpt</p>
-
-	@{var length = model.tags?.length ?? 0;}
-	@if (length > 0) {
-		<div class="tags">
-			@for(var i = 0; i < length; i++) {
-				 @{var tag = model.tags![i];}
-					<a class="btn btn-sm btn-outline-primary" href="@tag.url">#@tag.title</a>
-			}
-		</div>
-	}
-	<div class="my-3"><a class="btn btn-primary" href="@model.url">Читать далее</a></div>
+<div class="post-preview">
+	<h2><a href="@model.url">@model.title</a></h2>
+	<a class="d-block mb-2" href="@model.url">
+		<img class="img-fluid" src="@model.getImage()" />
+	</a>	
+	<div class="excerpt">@(model.excerpt)</div>
 </div>

@@ -1,89 +1,78 @@
 import 'package:itblog/models/data.dart';
 import 'package:itblog/views/views.dart';
 
+import 'helpers.dart';
 import 'http/shelf.dart';
 
 class TagsController {
-  static Future<Response> PublicIndex(Request request) async {
-    final db = Injector.appInstance.get<DB>();
-    try {
-      final tags = await db.tags(published: 1);
-      return HtmlResponse.ok(TagsIndexView(tags));
-    } catch (e) {
-      return HtmlResponse.internalServerError();
-    }
-  }
+  Router get router {
+    final router = Router();
 
-  static Future<Response> Index(Request request) async {
-    final db = Injector.appInstance.get<DB>();
-    try {
-      final tags = await db.tags();
-      return HtmlResponse.ok(TagsIndexView(tags));
-    } catch (e) {
-      return HtmlResponse.internalServerError();
-    }
-  }
+    router.get('/<slug>', (Request request, String slug) async {
+      final db = Injector.appInstance.get<DB>();
+      try {
+        final tag = db.tagBySlug(slug, loadRelations: true);
+        var vd = viewData(request);
+        if (tag.url != request.requestedUri.path) {
+          return Response.seeOther(tag.url);
+        }
+        return Response.ok(TagsShowView(tag,
+            viewData: vd..['title'] = 'Записи с тэгом #${tag.title}'));
+      } on NotFoundException {
+        throw Error404();
+      } catch (e) {
+        throw Error500(e.toString());
+      }
+    });
 
-  static Future<Response> Details(Request request, String slug) async {
-    final db = Injector.appInstance.get<DB>();
-    try {
-      final tag = await db.tagBySlug(slug);
-      //TODO: check canonical url, published state and so on
-      return HtmlResponse.ok(TagsShowView(tag));
-    } on NotFoundException {
-      return HtmlResponse.notFound();
-    } catch (e) {
-      return HtmlResponse.internalServerError();
-    }
+    return router;
   }
+}
 
-  static Future<Response> New(Request request) async {
-    return HtmlResponse.ok(TagsFormView(Tag()));
-  }
+class AdminTagsController {
+  Router get router {
+    final router = Router();
 
-  static Future<Response> Create(Request request) async {
-    final db = Injector.appInstance.get<DB>();
-    try {
+    router.get('/', (Request request) async {
+      final db = Injector.appInstance.get<DB>();
+      final list = await db.tags();
+      var vd = viewData(request);
+      return Response.ok(TagsIndexView(list, viewData: vd));
+    });
+
+    router.get('/new', (Request request) async {
+      var vd = viewData(request);
+      return Response.ok(TagsFormView(Tag(), viewData: vd));
+    });
+
+    router.post('/new', (Request request) async {
+      final db = Injector.appInstance.get<DB>();
       final form = request.context['postParams'] as Map<String, dynamic>;
       final tag = Tag.fromMap(form);
       db.createTag(tag);
-      return HtmlResponse.movedPermanently("/admin/tags");
-    } catch (e) {
-      return HtmlResponse.internalServerError(body: e.toString());
-    }
-  }
+      return Response.movedPermanently("/admin/tags/");
+    });
 
-  static Future<Response> Edit(Request request, String id) async {
-    final db = Injector.appInstance.get<DB>();
-    try {
-      final tag = await db.tag(toInt(id));
-      return HtmlResponse.ok(TagsFormView(tag));
-    } on NotFoundException {
-      return HtmlResponse.notFound();
-    } catch (e) {
-      return HtmlResponse.internalServerError(body: e.toString());
-    }
-  }
+    router.get('/edit/<id>', (Request request) async {
+      var vd = viewData(request);
+      return Response.ok(TagsFormView(Tag(), viewData: vd));
+    });
 
-  static Future<Response> Update(Request request, String id) async {
-    final db = Injector.appInstance.get<DB>();
-    try {
+    router.post('/edit/<id>', (Request request, String id) async {
+      final db = Injector.appInstance.get<DB>();
       final form = request.context['postParams'] as Map<String, dynamic>;
       final tag = Tag.fromMap(form);
       db.updateTag(tag);
-      return HtmlResponse.movedPermanently("/admin/tags");
-    } catch (e) {
-      return HtmlResponse.internalServerError(body: e.toString());
-    }
-  }
+      return Response.movedPermanently("/admin/tags/");
+    });
 
-  static Future<Response> Delete(Request request, String id) async {
-    final db = Injector.appInstance.get<DB>();
-    try {
+    router.post('/delete/<id>', (Request request, String id) async {
+      final db = Injector.appInstance.get<DB>();
+
       await db.deleteTag(toInt(id));
-      return HtmlResponse.movedPermanently("/admin/tags");
-    } catch (e) {
-      return HtmlResponse.internalServerError(body: e.toString());
-    }
+      return Response.movedPermanently("/admin/tags/");
+    });
+
+    return router;
   }
 }

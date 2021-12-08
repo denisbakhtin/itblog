@@ -2,11 +2,11 @@
 	<div class="footer-subscribe">
 		<div class="container text-center">
 			<h3>Хотите быть в курсе свежих публикаций?</h3>
-			<p class="mb-4">Подпишитесь на рассылку, приватность адреса гарантируется...</p>
-			<form action="/subscribe" method="post" class="form-inline">
+			<p class="mb-4">Подпишитесь на рассылку</p>
+			<form action="/subscribers/new" method="post" class="form-inline">
 				<div class="form-group mb-0">
-					<input type="text" class="form-control mr-2" name="email" type="email" placeholder="Эл. адрес:" />
-					<button type="submit" class="btn btn-primary">Подписаться</button>
+					<input class="form-control mr-2" name="email" type="email" placeholder="Эл. адрес:" />
+					<button type="submit" class="btn btn-secondary">Подписаться</button>
 				</div>
 			</form>
 		</div>
@@ -14,50 +14,49 @@
 	<div class="footer-nav">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-3">
+				<div class="col-sm-6">
 					<h4><span class="text-primary">IT</span> Blog</h4>
-					<p>Блог о разработке ПО в современном <span class="line-through">и не очень стиле</span>. Без претензии на знание абсолютных истин, но с неизменным стремлением к актуальному самообразованию.</p>
+					<p>Блог о разработке ПО в современном <span class="line-through">и не очень стиле</span>: от написания сервисов, до анимаций.</p>
 				</div>
+				<!--
 				<div class="col-sm-3">
 					<h6 class="text-uppercase">Услуги</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item">
-							<a class="nav-link" href="/pages/go-development">Разработка на Go</a>
+							<a class="nav-link pl-0" href="/pages/fullstack-development">Full-stack разработка</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/pages/js-development">Разработка на JS</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/pages/fullstack-development">Full-stack разработка</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/pages/support">Поддержка</a>
+							<a class="nav-link pl-0" href="/pages/support">Поддержка</a>
 						</li>
 					</ul>
 				</div>
+				-->
+				
+				<!--
 				<div class="col-sm-3">
 					<h6 class="text-uppercase">Навигация</h6>
 					<ul class="nav flex-column">
 						<li class="nav-item">
-							<a class="nav-link" href="/">Главная</a>
+							<a class="nav-link pl-0" href="/">Главная</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/pages/about">О сайте</a>
+							<a class="nav-link pl-0" href="/pages/about">О сайте</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/blog">Блог</a>
+							<a class="nav-link pl-0" href="/blog">Блог</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/pages/contacts">Контакты</a>
+							<a class="nav-link pl-0" href="/pages/contacts">Контакты</a>
 						</li>
 					</ul>
 				</div>
-				<div class="col-sm-3">
+				-->
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4">
 					<h6 class="text-uppercase">Связаться</h6>
 					<p>
-						<a href="tel:+89093774327" class="contact-link"><i class="mdi mdi-phone mr-2"></i>+8 (909) 377-47-27</a>
-						<br/>
-						<a href="mailto:denis.bakhtin@@gmail.com" class="contact-link"><i class="mdi mdi-email-outline mr-2"></i>denis.bakhtin@@gmail.com</a>
+						По вопросам сотрудничества:<br>
+						<a href="mailto:denis.bakhtin@@gmail.com" class="contact-link">@renderPartial("shared/_mdi_email") denis.bakhtin@@gmail.com</a>
 					</p>
 				</div>
 			</div>
@@ -65,7 +64,7 @@
 	</div>
 	<div class="footer-copyright">
 		<div class="container">			
-			<p class="mb-0 text-center">&copy; @(now().year) <span class="strong">@(getSiteName())</span> by Denis Bakhtin.
+			<p class="mb-0 text-left">&copy; @(now().year) <span class="strong">@(getSiteName())</span> by Denis Bakhtin.
 		</div>
 	</div>
 </footer>

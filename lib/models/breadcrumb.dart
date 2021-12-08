@@ -1,5 +1,5 @@
 class Breadcrumb {
-  String url;
-  String title;
+  final String url;
+  final String title;
   Breadcrumb({this.url = '', this.title = ''});
 }

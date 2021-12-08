@@ -15,9 +15,11 @@ class Comment {
       this.post = null,
       this.userName = ''});
 
-  static String get newUrl => "/new_comment";
-  String get editUrl => "/admin/edit_comment/$id";
-  String get deleteUrl => "/admin/delete_comment/$id";
+  String get url => "/posts/$postId/abc#comment-$id";
+  static String get indexUrl => "/admin/comments";
+  static String get newUrl => "/comments/new";
+  String get editUrl => "/admin/comments/edit/$id";
+  String get deleteUrl => "/admin/comments/delete/$id";
 
   String get excerpt => '';
 

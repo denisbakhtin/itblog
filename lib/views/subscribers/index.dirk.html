@@ -1,0 +1,34 @@
+@import 'package:itblog/models/data.dart'
+@type List<Subscriber>
+@layout layout_dashboard
+@{
+    viewData['title'] = 'Подписчики';
+}
+
+<div class="main-content" role="main">
+  <h2>@(viewData["title"])</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="shrink">№</th>
+        <th>Эл. почта</th>
+        <th class="shrink">Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(var i = 0; i < model.length; i++) {
+        @{var subscriber = model[i];}
+        <tr>
+          <td class="shrink">@subscriber.id</td>
+          <td>@subscriber.email</td>
+          <td class="shrink">
+            <a href="@subscriber.editUrl" class="btn btn-sm btn-primary">@renderPartial("shared/_mdi_pencil")</a>
+            <form class="inline-block" action="@subscriber.deleteUrl" method="post">
+              <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">@renderPartial("shared/_mdi_delete")</button>
+            </form>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>  
+</div>

@@ -1,10 +1,7 @@
 @import 'package:itblog/models/data.dart'
 @type Page
 
-<div class="container" role="main">
-	@renderPartial("shared/_sidebar")
-  <div id="main-column">
-    <h2>@model.title</h2>
-    <div class="content">@model.content</div>
-  </div>
+<div id="main-column">
+  <h1>@model.title</h1>
+  <div class="content">@model.content</div>
 </div>

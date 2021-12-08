@@ -1,12 +1,11 @@
 [Unit]
-Description=IT Blog Web Server
+Description=itblog web site
 After=network.target
-After=postgresql.service
 
 [Service]
 User=tabula
-WorkingDirectory=/home/tabula/go/src/github.com/denisbakhtin/itblog
-ExecStart=/home/tabula/go/src/github.com/denisbakhtin/itblog/itblog-go -mode=release
+WorkingDirectory=/home/tabula/itblog
+ExecStart=/home/tabula/itblog/main --mode=release
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
@@ -14,4 +13,3 @@ RestartSec=10s
 
 [Install]
 WantedBy=multi-user.target
-

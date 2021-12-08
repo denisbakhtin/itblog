@@ -92,6 +92,7 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'lib/assets/images', to: '../images' },
+                { from: 'lib/assets/js/ckeditor', to: '../assets/ckeditor' },
             ],
         }),
     ]

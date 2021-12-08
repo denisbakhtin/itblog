@@ -1,6 +1,5 @@
 @import "./my_variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
-@import "../../../node_modules/select2/dist/css/select2.css";
 
 html {
   position: relative;
@@ -20,7 +19,7 @@ body {
   &>.container {
     margin-top: 25px;
     margin-bottom: 25px;
-    min-height: calc(100vh - 64px);
+    overflow: hidden;
   }
 }
 
@@ -40,7 +39,7 @@ body {
 
   .footer-nav {
     font-weight: 300;
-    padding: 75px 0;
+    padding: 40px 0;
 
     h5 {
       text-transform: uppercase;
@@ -62,8 +61,8 @@ body {
 
   .footer-copyright {
     padding: 15px 0;
-    background: $primary;
-    color: #fff;
+    background: $secondary;
+    color: #ccc;
   }
 }
 
@@ -127,7 +126,7 @@ textarea.parsley-error {
   width: 210px;
   float: right;
 
-  &+#main-column {
+  &+* {
     margin-right: 235px;
     overflow: hidden;
   }
@@ -151,12 +150,12 @@ textarea.parsley-error {
       margin-bottom: 10px;
     }
 
-    h4 {
+    h6 {
       transition: color 0.3s ease;
     }
 
     &:hover {
-      h4 {
+      h6 {
         color: $primary;
       }
     }
@@ -165,7 +164,9 @@ textarea.parsley-error {
 
 #main-column {
   .content {
-    figure.image {
+
+    figure,
+    p {
       img {
         max-width: 100%;
         height: auto;
@@ -195,7 +196,7 @@ table thead th {
 }
 
 .navbar.fixed-top {
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 
   &+* {
     padding-top: 55px;
@@ -217,10 +218,10 @@ table thead th {
 
     .navbar-brand {
       width: $dashboard-sidebar-width;
-      background: #222;
-      margin-top: -1rem;
-      margin-bottom: -1rem;
-      height: 55px;
+      background: #333;
+      margin-top: -1.1rem;
+      margin-bottom: -1.1rem;
+      height: 55.5px;
       padding: 1rem 20px;
     }
 
@@ -278,6 +279,8 @@ table thead th {
 }
 
 .navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
   .nav-item {
     text-transform: uppercase;
     font-weight: 500;
@@ -344,9 +347,21 @@ table thead th {
 }
 
 .post-preview {
-  a {
-    &:hover {
-      text-decoration: none;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 15px 0;
+
+    a {
+      color: #333;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: $info;
+        text-decoration: none;
+      }
     }
   }
 }
@@ -355,7 +370,7 @@ table thead th {
   font-size: 90%;
   margin: 15px 0 25px 0;
   padding: 5px 10px;
-  background: rgba(249, 249, 249, .99);
+  background: $post-info-bg;
   border: none !important;
 }
 
@@ -369,6 +384,10 @@ table thead th {
   margin-top: 100px;
   margin-bottom: 50px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+#ck-content {
+  display: none;
 }
 
 .ck-content {
@@ -470,6 +489,11 @@ h6,
   color: #000;
 }
 
+h2,
+.h2 {
+  margin-bottom: 20px;
+}
+
 ul.pagination {
   margin-bottom: 0;
 }
@@ -525,8 +549,10 @@ ul.pagination {
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+b,
+strong,
 .strong {
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .line-through {
@@ -586,5 +612,73 @@ ul.pagination {
       transition: all .5s linear;
       vertical-align: middle;
     }
+  }
+}
+
+.select2-container {
+  width: 100% !important;
+}
+
+.error {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    color: $success;
+  }
+
+  .description {
+    margin-bottom: 15px;
+  }
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.mt-5,
+.my-5 {
+  margin-top: 3rem !important;
+}
+
+.mb-5,
+.my-5 {
+  margin-bottom: 3rem !important;
+}
+
+pre {
+  background: #ddd;
+  color: #222;
+  padding: 15px;
+  border-radius: 4px;
+  font-weight: bold;
+  line-height: 15px;
+}
+
+table {
+  width: 100%;
+  margin-bottom: $spacer;
+  color: $table-color;
+  background-color: $table-bg; // Reset for nesting within parents with `background-color`.
+
+  th,
+  td {
+    padding: $table-cell-padding;
+    vertical-align: top;
+    border-top: $table-border-width solid $table-border-color;
+  }
+
+  thead th {
+    vertical-align: bottom;
+    border-bottom: (2 * $table-border-width) solid $table-border-color;
+  }
+
+  tbody+tbody {
+    border-top: (2 * $table-border-width) solid $table-border-color;
   }
 }
