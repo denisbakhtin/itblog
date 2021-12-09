@@ -1,7 +1,5 @@
 lib/config.json
-lib/debug.db
 lib/release.db
-lib/test.db
 node_modules
 itblog
 .dart_tool
