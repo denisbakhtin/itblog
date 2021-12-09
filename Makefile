@@ -1,7 +1,7 @@
 MAKEFLAGS += -j3
 
 #consider moving to task, but it can not run long tasks in parallel
-watch: webpack_watch build_runner_watch
+watch: build_runner_watch
 
 webpack_watch:
 	@echo "Running webpack watch"

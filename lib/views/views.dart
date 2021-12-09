@@ -353,7 +353,7 @@ String LayoutView(String model, {Map<String, dynamic> viewData = const {}}) {
     res += '''" /> ''';
   }
   res +=
-      ''' <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet"> <link rel="stylesheet" href="/public/assets/main.css"> </head> <body class="public-body"> ''';
+      ''' <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet"> <link rel="stylesheet" href="/public/assets/application.css"> </head> <body class="public-body"> ''';
   res += '''${PartialSharedSupnavbarView(viewData: viewData)}''';
   res += '''${PartialSharedNavbarView(viewData: viewData)}''';
   res += '''${PartialHomeIntroView(viewData: viewData)}''';
