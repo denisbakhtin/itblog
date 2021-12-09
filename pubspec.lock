@@ -16,12 +16,12 @@ packages:
     source: hosted
     version: "1.5.0"
   args:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.3.0"
   async:
     dependency: transitive
     description:
@@ -205,7 +205,7 @@ packages:
       name: frontend_server_client
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.2"
   glob:
     dependency: transitive
     description:
@@ -400,10 +400,10 @@ packages:
   shelf_secure_cookie:
     dependency: "direct main"
     description:
-      path: "../shelf-secure-cookie"
-      relative: true
-    source: path
-    version: "1.0.6"
+      name: shelf_secure_cookie
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   shelf_static:
     dependency: "direct main"
     description:
@@ -566,4 +566,4 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.12.0 <=2.14.0-43.0.dev"
+  dart: ">=2.12.0 <3.0.0"
