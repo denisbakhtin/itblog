@@ -3,8 +3,8 @@
 
 <div class="post-preview">
 	<h2><a href="@model.url">@model.title</a></h2>
-	<a class="d-block mb-2" href="@model.url">
-		<img class="img-fluid" src="@model.getImage()" />
+	<a href="@model.url">
+		<img src="@model.getImage()" />
 	</a>	
 	<div class="excerpt">@(model.excerpt)</div>
 </div>

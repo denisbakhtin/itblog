@@ -10,6 +10,7 @@ Map<String, dynamic> viewData(Request request) => {
       'user': request.context['user'],
       'path': request.requestedUri.path,
       'name': Injector.appInstance.get<Config>().siteName,
+      'isDebug': Injector.appInstance.get<Config>().mode == "debug",
     };
 
 String getOauthName() {

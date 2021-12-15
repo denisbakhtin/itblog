@@ -7,36 +7,26 @@
 
 <div class="main-content" role="main">
   <form method="post">
-    <fieldset>
-      <legend>@(viewData["title"])</legend>
-      @renderPartial("shared/_messages")
-      <input type="hidden" name="id" value="@model.id">
-      
-      <div class="form-group">
-        <label class="control-label" for="title">Заголовок</label>
-        <input id="title" name="title" value="@model.title" class="form-control" required="" >
-      </div>
+    <h3>@(viewData["title"])</h3>
+    @renderPartial("shared/_messages")
+    <input type="hidden" name="id" value="@model.id">
+    
+    <label for="title">Заголовок</label>
+    <input id="title" name="title" value="@model.title" required="" >
 
-      <div class="form-group">
-        <label class="control-label" for="ck-content">Содержание</label>
-        <textarea name="content" id="ck-content">@model.content</textarea>
-      </div>
+    <label for="ck-content">Содержание</label>
+    <textarea name="content" id="ck-content">@model.content</textarea>
 
-      <div class="form-group">
-        <label class="control-label">Мета описание</label>
-        <textarea name="meta_description" id="meta_description" class="form-control">@model.metaDescription</textarea>
-      </div>
+    <label>Мета описание</label>
+    <textarea name="meta_description" id="meta_description">@model.metaDescription</textarea>
 
-      <div class="form-group">
-        <input id="published" name="published" type="checkbox" value="1" @if (model.published == 1) {checked} >
-        <label class="control-label" for="published">Опубликовать</label>
-      </div>
+    <div class="d-flex mb-10">
+      <input id="published" name="published" type="checkbox" value="1" @if (model.published == 1) {checked} >
+      <label for="published">Опубликовать</label>
+    </div>
 
-      <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Отправить">
-        <a class="btn btn-secondary" href="@Page.indexUrl">Отмена</a>
-      </div>
-    </fieldset>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+    <a class="btn btn-secondary" href="@Page.indexUrl">Отмена</a>
   </form>
 </div>
 

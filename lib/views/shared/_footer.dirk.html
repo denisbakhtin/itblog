@@ -1,11 +1,11 @@
 <footer id="footer">
 	<div class="footer-subscribe">
-		<div class="container text-center">
+		<div class="container">
 			<h3>Хотите быть в курсе свежих публикаций?</h3>
-			<p class="mb-4">Подпишитесь на рассылку</p>
+			<p>Подпишитесь на рассылку</p>
 			<form action="/subscribers/new" method="post" class="form-inline">
-				<div class="form-group mb-0">
-					<input class="form-control mr-2" name="email" type="email" placeholder="Эл. адрес:" />
+				<div class="form-group">
+					<input name="email" type="email" placeholder="Эл. адрес:" />
 					<button type="submit" class="btn btn-secondary">Подписаться</button>
 				</div>
 			</form>
@@ -13,47 +13,13 @@
 	</div>
 	<div class="footer-nav">
 		<div class="container">
-			<div class="row">
-				<div class="col-sm-6">
+				<div class="left">
 					<h4><span class="text-primary">IT</span> Blog</h4>
 					<p>Блог о разработке ПО в современном <span class="line-through">и не очень стиле</span>: от написания сервисов, до анимаций.</p>
 				</div>
-				<!--
-				<div class="col-sm-3">
-					<h6 class="text-uppercase">Услуги</h6>
-					<ul class="nav flex-column">
-						<li class="nav-item">
-							<a class="nav-link pl-0" href="/pages/fullstack-development">Full-stack разработка</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link pl-0" href="/pages/support">Поддержка</a>
-						</li>
-					</ul>
-				</div>
-				-->
 				
-				<!--
-				<div class="col-sm-3">
-					<h6 class="text-uppercase">Навигация</h6>
-					<ul class="nav flex-column">
-						<li class="nav-item">
-							<a class="nav-link pl-0" href="/">Главная</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link pl-0" href="/pages/about">О сайте</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link pl-0" href="/blog">Блог</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link pl-0" href="/pages/contacts">Контакты</a>
-						</li>
-					</ul>
-				</div>
-				-->
-				<div class="col-sm-2"></div>
-				<div class="col-sm-4">
-					<h6 class="text-uppercase">Связаться</h6>
+				<div class="right">
+					<h5>Связаться</h5>
 					<p>
 						По вопросам сотрудничества:<br>
 						<a href="mailto:denis.bakhtin@@gmail.com" class="contact-link">@renderPartial("shared/_mdi_email") denis.bakhtin@@gmail.com</a>
@@ -64,7 +30,7 @@
 	</div>
 	<div class="footer-copyright">
 		<div class="container">			
-			<p class="mb-0 text-left">&copy; @(now().year) <span class="strong">@(getSiteName())</span> by Denis Bakhtin.
+			<p>&copy; @(now().year) <span class="strong">@(getSiteName())</span> by Denis Bakhtin.
 		</div>
 	</div>
 </footer>

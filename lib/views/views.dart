@@ -25,16 +25,15 @@ String AuthSigninView({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   viewData['title'] = 'Вход в систему';
-  res +=
-      ''' <div class="container" role="main"> <div class="card auth-card"> <div class="card-body"> <form method="post"> <h4 class="card-title">Войти</h4> ''';
+  res += ''' <div class="auth-card"> <form method="post"> <h4>Войти</h4> ''';
   res += '''${PartialSharedMessagesView(viewData: viewData)}''';
   res +=
-      ''' <div class="form-group"> <label class="control-label" for="email">Эл. почта</label> <input id="email" name="email" type="email" placeholder="me@example.com" class="form-control input-md" required> </div> <div class="form-group"> <label class="control-label" for="password">Пароль</label> <input id="password" name="password" type="password" placeholder="Пароль" class="form-control input-md" required> </div> ''';
+      ''' <label for="email">Эл. почта</label> <input id="email" name="email" type="email" placeholder="me@example.com" required> <label for="password">Пароль</label> <input id="password" name="password" type="password" placeholder="Пароль" required> ''';
   if (viewData['error'] == '1') {
     res += ''' <p class="text-danger">Неверный логин или пароль.</p> ''';
   }
   res +=
-      ''' <button id="signin" name="signin" class="btn btn-primary">Войти</button> </form> </div> </div> </div> ''';
+      ''' <button id="signin" name="signin" class="btn btn-primary">Войти</button> </form> </div> ''';
   return LayoutView(res, viewData: viewData);
 }
 
@@ -43,10 +42,10 @@ String AuthSignupView({Map<String, dynamic> viewData = const {}}) {
   viewData = Map.from(viewData);
   viewData['title'] = 'Регистрация';
   res +=
-      ''' <div class="container" role="main"> <div class="card auth-card"> <div class="card-body"> <form method="post"> <h4 class="card-title">Регистрация</h4> ''';
+      ''' <div class="auth-card"> <form method="post"> <h4>Регистрация</h4> ''';
   res += '''${PartialSharedMessagesView(viewData: viewData)}''';
   res +=
-      ''' <div class="form-group"> <label class="control-label" for="name">Имя</label> <input id="name" name="name" placeholder="Ваше имя" class="form-control input-md" required> </div> <div class="form-group"> <label class="control-label" for="email">Эл. почта</label> <input id="email" name="email" type="email" placeholder="Ваша эл. почта" class="form-control input-md" required> </div> <div class="form-group"> <label class="control-label" for="password">Пароль</label> <input id="password" name="password" type="password" placeholder="Ваш пароль" class="form-control input-md" required> </div> <div class="form-group"> <label class="control-label" for="passwordrepeat">Повторите пароль</label> <input id="passwordrepeat" name="passwordrepeat" type="password" placeholder="Ваш пароль" class="form-control input-md" required> </div> ''';
+      ''' <label for="name">Имя</label> <input id="name" name="name" placeholder="Ваше имя" required> <label for="email">Эл. почта</label> <input id="email" name="email" type="email" placeholder="Ваша эл. почта" required> <label for="password">Пароль</label> <input id="password" name="password" type="password" placeholder="Ваш пароль" required> <label for="passwordrepeat">Повторите пароль</label> <input id="passwordrepeat" name="passwordrepeat" type="password" placeholder="Ваш пароль" required> ''';
   if (viewData['error'] == '1') {
     res +=
         ''' <p class="text-danger">Пользователь с такой почтой уже существует</p> ''';
@@ -55,7 +54,7 @@ String AuthSignupView({Map<String, dynamic> viewData = const {}}) {
     res += ''' <p class="text-danger">Внимательно заполните поля</p> ''';
   }
   res +=
-      ''' <button id="signup" name="signup" class="btn btn-primary">Регистрация</button> </form> </div> </div> </div> ''';
+      ''' <button id="signup" name="signup" class="btn btn-primary">Регистрация</button> </form> </div> ''';
   return LayoutView(res, viewData: viewData);
 }
 
@@ -71,21 +70,19 @@ String CommentsFormView(Comment model,
   res += ''' <input type="hidden" name="id" value="''';
   res += '''${sanitize(model.id)}''';
   res +=
-      '''" > <div class="form-group"> <label class="control-label" for="content">Content</label> <textarea name="content" class="form-control" id="content">''';
+      '''" > <label for="content">Content</label> <textarea name="content" id="content">''';
   res += '''${sanitize(model.content)}''';
-  res +=
-      '''</textarea> </div> <div class="form-group"> <label class="control-label" for="post_id">Post: ''';
+  res += '''</textarea> <label for="post_id">Post: ''';
   res += '''${sanitize(model.post)}''';
-  res +=
-      '''?.title</label> </div> <div class="form-group"> <label class="control-label" for="user_name">Пользователь: ''';
+  res += '''?.title</label> <label for="user_name">Пользователь: ''';
   res += '''${sanitize(model.userName)}''';
   res +=
-      '''</label> </div> <div class="form-group"> <input id="published" name="published" type="checkbox" value="1" ''';
+      '''</label> <input id="published" name="published" type="checkbox" value="1" ''';
   if (model.published == 1) {
     res += '''checked''';
   }
   res +=
-      ''' > <label class="control-label" for="published">Опубликовать</label> </div> <input type="submit" class="btn btn-primary" value="Отправить"> <a class="btn btn-secondary" href="/admin/comments">Отмена</a> </fieldset> </form> </div>''';
+      ''' > <label for="published">Опубликовать</label> <button type="submit" class="btn btn-primary">Отправить</button> <a class="btn btn-secondary" href="/admin/comments">Отмена</a> </fieldset> </form> </div>''';
   return LayoutDashboardView(res, viewData: viewData);
 }
 
@@ -97,7 +94,7 @@ String CommentsIndexView(List<Comment> model,
   res += ''' <div class="main-content" role="main"> <h2>''';
   res += '''${sanitize(viewData["title"])}''';
   res +=
-      '''</h2> <table class="table"> <thead> <tr> <th class="shrink">№</th> <th>Имя</th> <th>Комментарий</th> <th class="shrink">Опубликовано</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
+      '''</h2> <table> <thead> <tr> <th class="shrink">№</th> <th>Имя</th> <th>Комментарий</th> <th class="shrink">Опубликовано</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
   for (var i = 0; i < model.length; i++) {
     var comment = model[i];
     res += ''' <tr> <td class="shrink">''';
@@ -114,16 +111,16 @@ String CommentsIndexView(List<Comment> model,
     }
     res += ''' </td> <td class="shrink"> <a href="''';
     res += '''${sanitize(comment.id)}''';
-    res += '''" class="btn btn-sm btn-secondary">''';
+    res += '''" class="btn btn-secondary">''';
     res += '''${PartialSharedMdiEyeView(viewData: viewData)}''';
     res += '''</a> <a href="''';
     res += '''${sanitize(comment.editUrl)}''';
-    res += '''" class="btn btn-sm btn-primary">''';
+    res += '''" class="btn btn-primary">''';
     res += '''${PartialSharedMdiPencilView(viewData: viewData)}''';
     res += '''</a> <form class="inline-block" action="''';
     res += '''${sanitize(comment.deleteUrl)}''';
     res +=
-        '''" method="post"> <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
+        '''" method="post"> <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
     res += '''${PartialSharedMdiDeleteView(viewData: viewData)}''';
     res += '''</button> </form> </td> </tr> ''';
   }
@@ -136,7 +133,7 @@ String PartialCommentsPublicFormView(Post model,
     {Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
-  res += ''' <div class="card public-comment mb-4"> <div class="card-body"> ''';
+  res += ''' <div class="public-comment"> ''';
   res += '''${PartialSharedMessagesView(viewData: viewData)}''';
   var name = getOauthName();
   if (name.isNotEmpty) {
@@ -147,12 +144,12 @@ String PartialCommentsPublicFormView(Post model,
         '''"> <input type="hidden" name="published" value="1"> <input type="hidden" name="user_name" value="''';
     res += '''${sanitize(name)}''';
     res +=
-        '''"> <div class="form-group"> <textarea name="content" class="form-control" placeholder="Введите ваш комментарий" id="content"></textarea> </div> <input type="submit" class="btn btn-primary" value="Отправить"> </form> ''';
+        '''"> <textarea name="content" class="form-control" placeholder="Введите ваш комментарий" id="content"></textarea> <button type="submit" class="btn btn-primary">Отправить</button> </form> ''';
   } else {
     res +=
         ''' <div class="text-center"> <p>Войдите с помощью учетной записи Гугл</p> <a class="btn btn-primary" href="/oauthgooglelogin">Войти</a> </div> ''';
   }
-  res += ''' </div> </div> ''';
+  res += ''' </div> ''';
   return res;
 }
 
@@ -177,16 +174,11 @@ String PartialDashboardNavbarView({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   res +=
-      '''<!-- Fixed navbar --> <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" role="navigation"> <div class="container-fluid"> <a class="navbar-brand" href="/">''';
-  res += '''${sanitize(getSiteName())}''';
-  res +=
-      '''</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarContent"> <ul class="navbar-nav ml-auto"> <li class="nav-item"> <a class="nav-link" href="/">''';
+      '''<!-- Fixed navbar --> <nav class="navbar" role="navigation"> <div class="container-fluid"> <ul> <li> <a href="/">''';
   res += '''${PartialSharedMdiWebView(viewData: viewData)}''';
-  res +=
-      ''' Сайт</a> </li> <li class="nav-item"> <a class="nav-link" href="/auth/signout">''';
+  res += ''' Сайт</a> </li> <li> <a href="/auth/signout">''';
   res += '''${PartialSharedMdiLogoutView(viewData: viewData)}''';
-  res +=
-      ''' Выйти</a> </li> </ul> </div><!--/.nav-collapse --> </div> </nav> ''';
+  res += ''' Выйти</a> </li> </ul> </div> </nav> ''';
   return res;
 }
 
@@ -194,49 +186,35 @@ String PartialDashboardSidebarView({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   var user = viewData['user'];
-  res +=
-      ''' <aside class="dashboard-sidebar"> <div class="well well-sm user-info"> <h5>Профиль</h5> <div class="dropdown"> <button class="btn btn-default dropdown-toggle text-uppercase" type="button" id="dropdownSettingsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ''';
-  res += '''${PartialSharedMdiCogsView(viewData: viewData)}''';
-  res +=
-      ''' настройки </button> <div class="dropdown-menu" aria-labelledby="dropdownSettingsButton"> <a class="dropdown-item" href="''';
-  res += '''${sanitize(user.editUrl)}''';
-  res += '''">''';
-  res += '''${PartialSharedMdiPencilView(viewData: viewData)}''';
-  res +=
-      '''</i>Редактировать</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/logout">''';
-  res += '''${PartialSharedMdiLogoutView(viewData: viewData)}''';
-  res += ''' Выйти</a> </div> </div> <span class="email">''';
-  res += '''${sanitize(user.email)}''';
-  res +=
-      '''</span> </div> <h5>Навигация</h5> <ul class="nav flex-column nav-pills"> <li class="nav-item"> <a class="nav-link" href="''';
+  res += ''' <aside class="dashboard-sidebar"> <nav> <ul> <li> <a href="''';
   res += '''${sanitize(Post.indexUrl)}''';
   res += '''">''';
   res += '''${PartialSharedMdiChevronRightView(viewData: viewData)}''';
-  res +=
-      ''' Записи</a> </li> <li class="nav-item"> <a class="nav-link" href="''';
+  res += ''' Записи</a> </li> <li> <a href="''';
   res += '''${sanitize(Tag.indexUrl)}''';
   res += '''">''';
   res += '''${PartialSharedMdiChevronRightView(viewData: viewData)}''';
-  res += ''' Тэги</a> </li> <li class="nav-item"> <a class="nav-link" href="''';
+  res += ''' Тэги</a> </li> <li> <a href="''';
   res += '''${sanitize(Comment.indexUrl)}''';
   res += '''">''';
   res += '''${PartialSharedMdiChevronRightView(viewData: viewData)}''';
-  res +=
-      ''' Комментарии</a> </li> <li class="nav-item"> <a class="nav-link" href="''';
+  res += ''' Комментарии</a> </li> <li> <a href="''';
   res += '''${sanitize(Page.indexUrl)}''';
   res += '''">''';
   res += '''${PartialSharedMdiChevronRightView(viewData: viewData)}''';
-  res +=
-      ''' Страницы</a> </li> <li class="nav-item"> <a class="nav-link" href="''';
+  res += ''' Страницы</a> </li> <li> <a href="''';
   res += '''${sanitize(Subscriber.indexUrl)}''';
   res += '''">''';
   res += '''${PartialSharedMdiChevronRightView(viewData: viewData)}''';
-  res +=
-      ''' Подписчики</a> </li> <li class="nav-item"> <a class="nav-link" href="''';
+  res += ''' Подписчики</a> </li> <li> <a href="''';
   res += '''${sanitize(User.indexUrl)}''';
   res += '''">''';
   res += '''${PartialSharedMdiChevronRightView(viewData: viewData)}''';
-  res += ''' Пользователи</a> </li> </ul> </aside> ''';
+  res += ''' Пользователи</a> </li> <li> <a href="''';
+  res += '''${sanitize(user.editUrl)}''';
+  res += '''">''';
+  res += '''${PartialSharedMdiChevronRightView(viewData: viewData)}''';
+  res += '''</i> Аккаунт</a> </li> </ul> </nav> </aside> ''';
   return res;
 }
 
@@ -290,11 +268,11 @@ String HomeShowView({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   var recentPosts = getRecentPosts();
+  res += ''' <div id="main-column" class="mr-0"> ''';
   for (var i = 0; i < recentPosts.length; i++) {
     res += '''${PartialPostsPreviewView(recentPosts[i], viewData: viewData)}''';
   }
-  res +=
-      ''' <div class="mt-5 mb-4 text-center"> <a class="btn btn-primary btn-lg" href="/posts">Мой блог</a> </div>''';
+  res += ''' </div> ''';
   return LayoutView(res, viewData: viewData);
 }
 
@@ -303,7 +281,7 @@ String PartialHomeIntroView({Map<String, dynamic> viewData = const {}}) {
   viewData = Map.from(viewData);
   if (viewData['path'] == '/') {
     res +=
-        ''' <header class="home-promo"> <div class="home-promo-header-wrapper"> <div class="container"> <div class="row"> <div class="col-sm-5"> <div class="page_header"> <h3 class="moduleTitle heading-style-2 visible-first"> Кроссплатформенная разработка </h3> </div> <div class="mod-article-single mod-article-single__type1" id="module_302"> <div class="item__module visible-first" id="item_190"> <!-- Item Title --> <h1 class="">на языке Dart</h1> <!-- Intro Text --> <div class="item_introtext"> <p>Магия перестаёт существовать после того, как вы понимаете, как она работает.</p> <p style="font-style:italic;">Tim Berners-Lee</p> </div> <a class="btn btn-primary" href="/posts"><span>Читать блог</span></a> </div> </div> </div> <div class="col-sm-7"> <figure class="promo_img"> <img src="/public/images/home_promo_droid.png" alt=""> </figure> </div> </div> </div> </div> </header> ''';
+        ''' <header class="home-promo"> <div class="home-promo-header-wrapper"> <div class="container"> <div class="left"> <h3 class="moduleTitle heading-style-2 visible-first"> Кроссплатформенная разработка </h3> <h1 class="">на языке Dart</h1> <div class="quote"> <p>Магия перестаёт существовать после того, как вы понимаете, как она работает.</p> <p style="font-style:italic;">Tim Berners-Lee</p> </div> <a class="btn btn-primary" href="/posts"><span>Читать блог</span></a> </div> <div class="right"> <figure class="promo_img"> <img src="/public/images/home_promo_droid.png" alt=""> </figure> </div> </div> </div> </header> ''';
   }
   return res;
 }
@@ -358,8 +336,8 @@ String LayoutView(String model, {Map<String, dynamic> viewData = const {}}) {
   res += '''${PartialSharedNavbarView(viewData: viewData)}''';
   res += '''${PartialHomeIntroView(viewData: viewData)}''';
   res += ''' <div class="container content-wrapper" role="main"> ''';
-  res += '''${PartialSharedSidebarView(viewData: viewData)}''';
   res += '''${model}''';
+  res += '''${PartialSharedSidebarView(viewData: viewData)}''';
   res += ''' </div> ''';
   res += '''${PartialSharedFooterView(viewData: viewData)}''';
   res +=
@@ -382,7 +360,7 @@ String LayoutDashboardView(String model,
   res += ''' <title>''';
   res += '''${sanitize(viewData["title"])}''';
   res +=
-      '''</title> <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <link rel="stylesheet" href="/public/assets/main.css"> </head> <body class="dashboard-body"> ''';
+      '''</title> <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <link rel="stylesheet" href="/public/assets/application.css"> </head> <body class="dashboard-body"> ''';
   res += '''${PartialDashboardNavbarView(viewData: viewData)}''';
   res += ''' <div class="content-wrapper"> ''';
   res += '''${PartialDashboardSidebarView(viewData: viewData)}''';
@@ -390,7 +368,7 @@ String LayoutDashboardView(String model,
   res += ''' </div> ''';
   res += '''${PartialDashboardFooterView(viewData: viewData)}''';
   res +=
-      ''' <!-- Include all compiled plugins (below), or include individual files as needed --> <script src="/public/assets/application.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> </body> </html> ''';
+      ''' <!-- Include all compiled plugins (below), or include individual files as needed --> <script src="/public/assets/application.js"></script> <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> </body> </html> ''';
   return res;
 }
 
@@ -407,13 +385,12 @@ String MailingsFormView(Mailing model,
   res += ''' <input type="hidden" name="id" value="''';
   res += '''${sanitize(model.id)}''';
   res +=
-      '''" > <div class="form-group"> <label class="control-label" for="title">Заголовок</label> <input id="title" name="title" value="''';
+      '''" > <label for="title">Заголовок</label> <input id="title" name="title" value="''';
   res += '''${sanitize(model.title)}''';
   res +=
-      '''" class="form-control" required=""> </div> <div class="form-group"> <label class="control-label" for="ck-content">Содержание</label> <textarea name="content" id="ck-content">''';
+      '''" required=""> <label for="ck-content">Содержание</label> <textarea name="content" id="ck-content">''';
   res += '''${sanitize(model.content)}''';
-  res +=
-      '''</textarea> </div> <button type="submit" class="btn btn-primary">''';
+  res += '''</textarea> <button type="submit" class="btn btn-primary">''';
   res += '''${PartialSharedMdiCheckView(viewData: viewData)}''';
   res += ''' Отправить</button> <a class="btn btn-secondary" href="''';
   res += '''${sanitize(Mailing.indexUrl)}''';
@@ -432,7 +409,7 @@ String MailingsIndexView(List<Mailing> model,
   res += ''' <div class="main-content" role="main"> <h2>''';
   res += '''${sanitize(viewData["title"])}''';
   res +=
-      '''</h2> <table class="table"> <thead> <tr> <th class="shrink">№</th> <th>Заголовок</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
+      '''</h2> <table> <thead> <tr> <th class="shrink">№</th> <th>Заголовок</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
   for (var i = 0; i < model.length; i++) {
     var mailing = model[i];
     res += ''' <tr> <td class="shrink">''';
@@ -441,16 +418,16 @@ String MailingsIndexView(List<Mailing> model,
     res += '''${sanitize(mailing.title)}''';
     res += '''</td> <td class="shrink"> <a href="''';
     res += '''${sanitize(mailing.url)}''';
-    res += '''" class="btn btn-sm btn-secondary">''';
+    res += '''" class="btn btn-secondary">''';
     res += '''${PartialSharedMdiEyeView(viewData: viewData)}''';
     res += '''</a> <a href="''';
     res += '''${sanitize(mailing.editUrl)}''';
-    res += '''" class="btn btn-sm btn-primary">''';
+    res += '''" class="btn btn-primary">''';
     res += '''${PartialSharedMdiPencilView(viewData: viewData)}''';
     res += '''</a> <form class="inline-block" action="''';
     res += '''${sanitize(mailing.deleteUrl)}''';
     res +=
-        '''" method="post"> <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
+        '''" method="post"> <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
     res += '''${PartialSharedMdiDeleteView(viewData: viewData)}''';
     res += '''</button> </form> </td> </tr> ''';
   }
@@ -480,31 +457,31 @@ String PagesFormView(Page model, {Map<String, dynamic> viewData = const {}}) {
   viewData = Map.from(viewData);
   viewData['title'] = 'Создание / Редактирование Страницы';
   res +=
-      ''' <div class="main-content" role="main"> <form method="post"> <fieldset> <legend>''';
+      ''' <div class="main-content" role="main"> <form method="post"> <h3>''';
   res += '''${sanitize(viewData["title"])}''';
-  res += '''</legend> ''';
+  res += '''</h3> ''';
   res += '''${PartialSharedMessagesView(viewData: viewData)}''';
   res += ''' <input type="hidden" name="id" value="''';
   res += '''${sanitize(model.id)}''';
   res +=
-      '''"> <div class="form-group"> <label class="control-label" for="title">Заголовок</label> <input id="title" name="title" value="''';
+      '''"> <label for="title">Заголовок</label> <input id="title" name="title" value="''';
   res += '''${sanitize(model.title)}''';
   res +=
-      '''" class="form-control" required="" > </div> <div class="form-group"> <label class="control-label" for="ck-content">Содержание</label> <textarea name="content" id="ck-content">''';
+      '''" required="" > <label for="ck-content">Содержание</label> <textarea name="content" id="ck-content">''';
   res += '''${sanitize(model.content)}''';
   res +=
-      '''</textarea> </div> <div class="form-group"> <label class="control-label">Мета описание</label> <textarea name="meta_description" id="meta_description" class="form-control">''';
+      '''</textarea> <label>Мета описание</label> <textarea name="meta_description" id="meta_description">''';
   res += '''${sanitize(model.metaDescription)}''';
   res +=
-      '''</textarea> </div> <div class="form-group"> <input id="published" name="published" type="checkbox" value="1" ''';
+      '''</textarea> <div class="d-flex mb-10"> <input id="published" name="published" type="checkbox" value="1" ''';
   if (model.published == 1) {
     res += '''checked''';
   }
   res +=
-      ''' > <label class="control-label" for="published">Опубликовать</label> </div> <div class="form-group"> <input type="submit" class="btn btn-primary" value="Отправить"> <a class="btn btn-secondary" href="''';
+      ''' > <label for="published">Опубликовать</label> </div> <button type="submit" class="btn btn-primary">Отправить</button> <a class="btn btn-secondary" href="''';
   res += '''${sanitize(Page.indexUrl)}''';
   res +=
-      '''">Отмена</a> </div> </fieldset> </form> </div> <script src="/public/assets/ckeditor/ckeditor.js"></script> ''';
+      '''">Отмена</a> </form> </div> <script src="/public/assets/ckeditor/ckeditor.js"></script> ''';
   return LayoutDashboardView(res, viewData: viewData);
 }
 
@@ -516,7 +493,7 @@ String PagesIndexView(List<Page> model,
   res += ''' <div class="main-content" role="main"> <h2>''';
   res += '''${sanitize(viewData["title"])}''';
   res +=
-      '''</h2> <table class="table"> <thead> <tr> <th class="shrink">№</th> <th>Заголовок</th> <th class="shrink">Опубликовано</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
+      '''</h2> <table> <thead> <tr> <th class="shrink">№</th> <th>Заголовок</th> <th class="shrink">Опубликовано</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
   for (var i = 0; i < model.length; i++) {
     var page = model[i];
     res += ''' <tr> <td class="shrink">''';
@@ -531,16 +508,16 @@ String PagesIndexView(List<Page> model,
     }
     res += ''' </td> <td class="shrink"> <a href="''';
     res += '''${sanitize(page.url)}''';
-    res += '''" class="btn btn-sm btn-secondary">''';
+    res += '''" class="btn btn-secondary">''';
     res += '''${PartialSharedMdiEyeView(viewData: viewData)}''';
     res += '''</a> <a href="''';
     res += '''${sanitize(page.editUrl)}''';
-    res += '''" class="btn btn-sm btn-primary">''';
+    res += '''" class="btn btn-primary">''';
     res += '''${PartialSharedMdiPencilView(viewData: viewData)}''';
     res += '''</a> <form class="inline-block" action="''';
     res += '''${sanitize(page.deleteUrl)}''';
     res +=
-        '''" method="post"> <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
+        '''" method="post"> <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
     res += '''${PartialSharedMdiDeleteView(viewData: viewData)}''';
     res += '''</button> </form> </td> </tr> ''';
   }
@@ -566,20 +543,20 @@ String PostsFormView(Post model, {Map<String, dynamic> viewData = const {}}) {
   viewData = Map.from(viewData);
   viewData['title'] = 'Создание / Редактирование Записи';
   res +=
-      ''' <div class="main-content" role="main"> <form method="post"> <fieldset> <legend>''';
+      ''' <div class="main-content" role="main"> <form method="post"> <h3>''';
   res += '''${sanitize(viewData["title"])}''';
-  res += '''</legend> ''';
+  res += '''</h3> ''';
   res += '''${PartialSharedMessagesView(viewData: viewData)}''';
   res += ''' <input type="hidden" name="id" value="''';
   res += '''${sanitize(model.id)}''';
   res +=
-      '''" > <div class="form-group"> <label class="control-label" for="title">Заголовок</label> <input id="title" name="title" value="''';
+      '''" > <label for="title">Заголовок</label> <input id="title" name="title" value="''';
   res += '''${sanitize(model.title)}''';
   res +=
-      '''" class="form-control" required=""> </div> <div class="form-group"> <label class="control-label" for="ck-content">Содержание</label> <textarea name="content" id="ck-content">''';
+      '''" required=""> <label for="ck-content">Содержание</label> <textarea name="content" id="ck-content">''';
   res += '''${sanitize(model.content)}''';
   res +=
-      '''</textarea> </div> <div class="form-group"> <label class="control-label" for="tags">Тэги</label> <select id="tags" name="tags[]" class="form-control" multiple="multiple"> ''';
+      '''</textarea> <label for="tags">Тэги</label> <select id="tags" name="tags[]" multiple="multiple"> ''';
   var tags = getTags();
   for (var i = 0; i < tags.length; i++) {
     var tag = tags[i];
@@ -594,22 +571,22 @@ String PostsFormView(Post model, {Map<String, dynamic> viewData = const {}}) {
     }
   }
   res +=
-      ''' </select> </div> <div class="form-group"> <label class="control-label">Мета описание</label> <textarea name="meta_description" id="meta_description" class="form-control">''';
+      ''' </select> <label>Мета описание</label> <textarea name="meta_description" id="meta_description">''';
   res += '''${sanitize(model.metaDescription)}''';
   res +=
-      '''</textarea> </div> <div class="form-group form-check"> <input id="published" name="published" type="checkbox" class="form-check-input" value="1" ''';
+      '''</textarea> <div class="d-flex mb-10"> <input id="published" name="published" type="checkbox" value="1" ''';
   if (model.published == 1) {
     res += '''checked''';
   }
   res +=
-      '''> <label class="control-label" for="published" class="form-check-label">Опубликовать</label> </div> <button type="submit" class="btn btn-primary">''';
+      '''> <label for="published">Опубликовать</label> </div> <button type="submit" class="btn btn-primary">''';
   res += '''${PartialSharedMdiCheckView(viewData: viewData)}''';
   res += ''' Отправить</button> <a class="btn btn-secondary" href="''';
   res += '''${sanitize(Post.indexUrl)}''';
   res += '''">''';
   res += '''${PartialSharedMdiCancelView(viewData: viewData)}''';
   res +=
-      ''' Отмена</a> </fieldset> </form> </div> <script src="/public/assets/ckeditor/ckeditor.js"></script> ''';
+      ''' Отмена</a> </form> </div> <script src="/public/assets/ckeditor/ckeditor.js"></script> ''';
   return LayoutDashboardView(res, viewData: viewData);
 }
 
@@ -621,7 +598,7 @@ String PostsIndexView(List<Post> model,
   res += ''' <div class="main-content" role="main"> <h2>''';
   res += '''${sanitize(viewData["title"])}''';
   res +=
-      '''</h2> <table class="table"> <thead> <tr> <th class="shrink">№</th> <th>Заголовок</th> <th class="shrink">Опубликовано</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
+      '''</h2> <table> <thead> <tr> <th class="shrink">№</th> <th>Заголовок</th> <th class="shrink">Опубликовано</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
   for (var i = 0; i < model.length; i++) {
     var post = model[i];
     res += ''' <tr> <td class="shrink">''';
@@ -636,16 +613,16 @@ String PostsIndexView(List<Post> model,
     }
     res += ''' </td> <td class="shrink"> <a href="''';
     res += '''${sanitize(post.url)}''';
-    res += '''" class="btn btn-sm btn-secondary">''';
+    res += '''" class="btn btn-secondary">''';
     res += '''${PartialSharedMdiEyeView(viewData: viewData)}''';
     res += '''</a> <a href="''';
     res += '''${sanitize(post.editUrl)}''';
-    res += '''" class="btn btn-sm btn-primary">''';
+    res += '''" class="btn btn-primary">''';
     res += '''${PartialSharedMdiPencilView(viewData: viewData)}''';
     res += '''</a> <form class="inline-block" action="''';
     res += '''${sanitize(post.deleteUrl)}''';
     res +=
-        '''" method="post"> <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
+        '''" method="post"> <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
     res += '''${PartialSharedMdiDeleteView(viewData: viewData)}''';
     res += '''</button> </form> </td> </tr> ''';
   }
@@ -669,12 +646,11 @@ String PostsPublicIndexView(List<Post> model,
     res += '''${PartialPostsPreviewView(model[i], viewData: viewData)}''';
   }
   if (paginator.isNotEmpty) {
-    res +=
-        ''' <nav class="d-flex justify-content-center"> <ul class="pagination"> ''';
+    res += ''' <nav class="pagination-wrapper"> <ul class="pagination"> ''';
     for (var p in paginator) {
-      res += ''' <li class="page-item ''';
+      res += ''' <li class="''';
       res += '''${sanitize(p.active ? 'active' : '')}''';
-      res += '''"><a class="page-link" href="''';
+      res += '''"><a href="''';
       res += '''${sanitize(p.url)}''';
       res += '''">''';
       res += '''${sanitize(p.title)}''';
@@ -694,7 +670,7 @@ String PostsShowView(Post model, {Map<String, dynamic> viewData = const {}}) {
   res += ''' <div id="main-column"> <h1> ''';
   res += '''${sanitize(model.title)}''';
   if (viewData['isAuthenticated'] ?? false) {
-    res += ''' <a class="btn btn-outline-primary btn-sm ml-2" href="''';
+    res += ''' <a class="btn btn-outline-primary" href="''';
     res += '''${sanitize(model.editUrl)}''';
     res += '''">''';
     res += '''${PartialSharedMdiPencilView(viewData: viewData)}''';
@@ -726,7 +702,7 @@ String PartialPostsInfoView(Post model,
   String res = '';
   viewData = Map.from(viewData);
   res +=
-      ''' <div class="card card-block bg-faded flex-row post-info"> <span class="post-info-item"> <a href="#comments">''';
+      ''' <div class="post-info"> <span class="post-info-item"> <a href="#comments">''';
   res += '''${PartialSharedMdiCommentView(viewData: viewData)}''';
   res += '''${sanitize(model.comments?.length ?? 0)}''';
   res += '''</a> </span> <span class="post-info-item"> ''';
@@ -751,9 +727,9 @@ String PartialPostsPreviewView(Post model,
   res += '''${sanitize(model.url)}''';
   res += '''">''';
   res += '''${sanitize(model.title)}''';
-  res += '''</a></h2> <a class="d-block mb-2" href="''';
+  res += '''</a></h2> <a href="''';
   res += '''${sanitize(model.url)}''';
-  res += '''"> <img class="img-fluid" src="''';
+  res += '''"> <img src="''';
   res += '''${sanitize(model.getImage())}''';
   res += '''" /> </a> <div class="excerpt">''';
   res += '''${sanitize(model.excerpt)}''';
@@ -797,14 +773,136 @@ String PartialSharedFooterView({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   res +=
-      '''<footer id="footer"> <div class="footer-subscribe"> <div class="container text-center"> <h3>Хотите быть в курсе свежих публикаций?</h3> <p class="mb-4">Подпишитесь на рассылку</p> <form action="/subscribers/new" method="post" class="form-inline"> <div class="form-group mb-0"> <input class="form-control mr-2" name="email" type="email" placeholder="Эл. адрес:" /> <button type="submit" class="btn btn-secondary">Подписаться</button> </div> </form> </div> </div> <div class="footer-nav"> <div class="container"> <div class="row"> <div class="col-sm-6"> <h4><span class="text-primary">IT</span> Blog</h4> <p>Блог о разработке ПО в современном <span class="line-through">и не очень стиле</span>: от написания сервисов, до анимаций.</p> </div> <!-- <div class="col-sm-3"> <h6 class="text-uppercase">Услуги</h6> <ul class="nav flex-column"> <li class="nav-item"> <a class="nav-link pl-0" href="/pages/fullstack-development">Full-stack разработка</a> </li> <li class="nav-item"> <a class="nav-link pl-0" href="/pages/support">Поддержка</a> </li> </ul> </div> --> <!-- <div class="col-sm-3"> <h6 class="text-uppercase">Навигация</h6> <ul class="nav flex-column"> <li class="nav-item"> <a class="nav-link pl-0" href="/">Главная</a> </li> <li class="nav-item"> <a class="nav-link pl-0" href="/pages/about">О сайте</a> </li> <li class="nav-item"> <a class="nav-link pl-0" href="/blog">Блог</a> </li> <li class="nav-item"> <a class="nav-link pl-0" href="/pages/contacts">Контакты</a> </li> </ul> </div> --> <div class="col-sm-2"></div> <div class="col-sm-4"> <h6 class="text-uppercase">Связаться</h6> <p> По вопросам сотрудничества:<br> <a href="mailto:denis.bakhtin@gmail.com" class="contact-link">''';
+      '''<footer id="footer"> <div class="footer-subscribe"> <div class="container"> <h3>Хотите быть в курсе свежих публикаций?</h3> <p>Подпишитесь на рассылку</p> <form action="/subscribers/new" method="post" class="form-inline"> <div class="form-group"> <input name="email" type="email" placeholder="Эл. адрес:" /> <button type="submit" class="btn btn-secondary">Подписаться</button> </div> </form> </div> </div> <div class="footer-nav"> <div class="container"> <div class="left"> <h4><span class="text-primary">IT</span> Blog</h4> <p>Блог о разработке ПО в современном <span class="line-through">и не очень стиле</span>: от написания сервисов, до анимаций.</p> </div> <div class="right"> <h5>Связаться</h5> <p> По вопросам сотрудничества:<br> <a href="mailto:denis.bakhtin@gmail.com" class="contact-link">''';
   res += '''${PartialSharedMdiEmailView(viewData: viewData)}''';
   res +=
-      ''' denis.bakhtin@gmail.com</a> </p> </div> </div> </div> </div> <div class="footer-copyright"> <div class="container"> <p class="mb-0 text-left">&copy; ''';
+      ''' denis.bakhtin@gmail.com</a> </p> </div> </div> </div> </div> <div class="footer-copyright"> <div class="container"> <p>&copy; ''';
   res += '''${sanitize(now().year)}''';
   res += ''' <span class="strong">''';
   res += '''${sanitize(getSiteName())}''';
   res += '''</span> by Denis Bakhtin. </div> </div> </footer> ''';
+  return res;
+}
+
+String PartialSharedMdiCancelView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10S2 17.5 2 12S6.5 2 12 2m0 2c-1.9 0-3.6.6-4.9 1.7l11.2 11.2c1-1.4 1.7-3.1 1.7-4.9c0-4.4-3.6-8-8-8m4.9 14.3L5.7 7.1C4.6 8.4 4 10.1 4 12c0 4.4 3.6 8 8 8c1.9 0 3.6-.6 4.9-1.7z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiCheckView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59L21 7z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiChevronRightView(
+    {Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12L8.59 7.41L10 6l6 6l-6 6l-1.41-1.42z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiCogsView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M15.9 18.45c1.35 0 2.45-1.1 2.45-2.45s-1.1-2.45-2.45-2.45c-1.36 0-2.45 1.1-2.45 2.45s1.09 2.45 2.45 2.45m5.2-1.77l1.48 1.16c.13.11.17.29.08.45l-1.4 2.42a.35.35 0 0 1-.43.15l-1.74-.7c-.36.28-.76.51-1.18.69l-.27 1.85c-.02.17-.17.3-.34.3h-2.8c-.18 0-.32-.13-.35-.3l-.26-1.85c-.43-.18-.82-.41-1.18-.69l-1.75.7c-.15.06-.34 0-.42-.15l-1.4-2.42a.351.351 0 0 1 .08-.45l1.48-1.16l-.05-.68l.05-.69l-1.48-1.15a.353.353 0 0 1-.08-.45l1.4-2.42c.08-.16.27-.22.42-.16l1.75.71c.36-.28.75-.52 1.18-.69l.26-1.86c.03-.16.17-.29.35-.29h2.8c.17 0 .32.13.34.29l.27 1.86c.42.17.82.41 1.18.69l1.74-.71c.17-.06.34 0 .43.16l1.4 2.42c.09.15.05.34-.08.45l-1.48 1.15l.05.69l-.05.68M6.69 8.07c.87 0 1.57-.7 1.57-1.57c0-.87-.7-1.58-1.57-1.58A1.58 1.58 0 0 0 5.11 6.5c0 .87.71 1.57 1.58 1.57m3.34-1.13l.97.74c.07.07.09.19.03.29l-.9 1.56c-.05.1-.17.14-.27.1l-1.12-.45l-.74.44l-.19 1.19c-.02.11-.11.19-.22.19h-1.8c-.12 0-.21-.08-.23-.19L5.4 9.62l-.76-.44l-1.14.45c-.09.04-.2 0-.26-.1l-.9-1.56c-.06-.1-.03-.22.05-.29l.95-.74l-.03-.44l.03-.44l-.95-.74a.229.229 0 0 1-.05-.29l.9-1.56c.06-.1.17-.14.26-.1l1.13.45l.77-.44l.16-1.19c.02-.11.11-.19.23-.19h1.8c.11 0 .2.08.22.19L8 3.38l.74.44l1.12-.45c.1-.04.22 0 .27.1l.9 1.56c.06.1.04.22-.03.29l-.97.74l.03.44l-.03.44z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiCommentView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M9 22a1 1 0 0 1-1-1v-3H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.1l-3.7 3.71c-.2.19-.45.29-.7.29H9z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiDeleteView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiEmailView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6m-2 0l-8 5l-8-5h16m0 12H4V8l8 5l8-5v10z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiEyeView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiFacebookView(
+    {Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89c1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiLogoutView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M16 17v-3H9v-4h7V7l5 5l-5 5M14 2a2 2 0 0 1 2 2v2h-2V4H5v16h9v-2h2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiMinusView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiPencilView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M16.84 2.73c-.39 0-.77.15-1.07.44l-2.12 2.12l5.3 5.31l2.12-2.1c.6-.61.6-1.56 0-2.14L17.9 3.17c-.3-.29-.68-.44-1.06-.44M12.94 6l-8.1 8.11l2.56.28l.18 2.29l2.28.17l.29 2.56l8.1-8.11m-14 3.74L2.5 21.73l6.7-1.79l-.24-2.16l-2.31-.17l-.18-2.32" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiPlusView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiTwitterView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69c.88-.53 1.56-1.37 1.88-2.38c-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29c0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15c0 1.49.75 2.81 1.91 3.56c-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07a4.28 4.28 0 0 0 4 2.98a8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21C16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56c.84-.6 1.56-1.36 2.14-2.23z" fill="currentColor"/></svg>''';
+  return res;
+}
+
+String PartialSharedMdiWebView({Map<String, dynamic> viewData = const {}}) {
+  String res = '';
+  viewData = Map.from(viewData);
+  res +=
+      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2c0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2c0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2c0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2c0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2z" fill="currentColor"/></svg>''';
   return res;
 }
 
@@ -824,23 +922,18 @@ String PartialSharedNavbarView({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   res +=
-      '''<!-- Fixed navbar --> <div class="navbar navbar-expand-lg navbar-light bg-white" role="navigation"> <div class="container"> <a class="navbar-brand" href="/">''';
-  res += '''${sanitize(getSiteName())}''';
-  res +=
-      '''</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarContent"> <ul class="navbar-nav mr-auto"> <li class="nav-item"><a class="nav-link" href="/">Главная</a></li> <li class="nav-item"><a class="nav-link" href="/posts">Блог</a></li> </ul> ''';
+      '''<!-- Fixed navbar --> <nav class="navbar" role="navigation"> <div class="container"> <ul> <li><a href="/">Главная</a></li> <li><a href="/posts">Блог</a></li> </ul> ''';
   if (viewData['isAuthenticated'] ?? false) {
     res +=
-        ''' <ul class="navbar-nav"> <li class="nav-item"> <a class="nav-link" href="/admin/posts/">Панель</a> </li> <li class="nav-item"> <a class="nav-link" href="/auth/signout">Выйти</a> </li> </ul> ''';
+        ''' <ul> <li> <a href="/admin/posts/">Панель</a> </li> <li> <a href="/auth/signout">Выйти</a> </li> </ul> ''';
   } else {
-    res +=
-        ''' <ul class="navbar-nav"> <li class="nav-item"><a class="nav-link" href="/auth/signin">Вход</a></li> ''';
+    res += ''' <ul> <li><a href="/auth/signin">Вход</a></li> ''';
     if (isSignupEnabled()) {
-      res +=
-          ''' <li class="nav-item"><a class="nav-link" href="/auth/signup">Регистрация</a></li> ''';
+      res += ''' <li><a href="/auth/signup">Регистрация</a></li> ''';
     }
     res += ''' </ul> ''';
   }
-  res += ''' </div><!--/.nav-collapse --> </div> </div> ''';
+  res += ''' </div> </nav> ''';
   return res;
 }
 
@@ -876,46 +969,46 @@ String PartialSharedSidebarView({Map<String, dynamic> viewData = const {}}) {
   viewData = Map.from(viewData);
   if (!(viewData['hideSidebar'] ?? false)) {
     res +=
-        ''' <aside id="sidebar"> <div> <h5>Тэги</h5> <ul class="nav sidebar-tags"> ''';
+        ''' <aside id="sidebar"> <nav> <h5>Тэги</h5> <ul class="nav sidebar-tags"> ''';
     var tags = getTags();
     for (var i = 0; i < tags.length; i++) {
       var tag = tags[i];
-      res += ''' <li class="nav-item"> <a class="nav-link" href="''';
+      res += ''' <li> <a href="''';
       res += '''${sanitize(tag.url)}''';
       res += '''">''';
       res += '''${sanitize(tag.title)}''';
       res += '''</a> </li> ''';
     }
-    res += ''' </ul> <h5>Последние записи</h5> <ul class="nav flex-column"> ''';
+    res +=
+        ''' </ul> <h5>Последние записи</h5> <ul class="nav sidebar-posts"> ''';
     var recentPosts = getRecentPosts();
     for (var i = 0; i < recentPosts.length; i++) {
       var post = recentPosts[i];
-      res +=
-          ''' <li class="nav-item"> <a class="nav-link d-block px-0" href="''';
+      res += ''' <li> <a href="''';
       res += '''${sanitize(post.url)}''';
       res += '''"> ''';
       var src = post.getImage();
       if (src.length > 0) {
-        res += ''' <img class="img-fluid" src="''';
+        res += ''' <img src="''';
         res += '''${sanitize(post.getImage())}''';
         res += '''" /> ''';
       }
-      res += ''' <h6 class="mb-0">''';
+      res += ''' <h6>''';
       res += '''${sanitize(post.title)}''';
       res += '''</h6> </a> </li> ''';
     }
-    res += ''' </ul> <h5>Архив</h5> <ul class="nav flex-column"> ''';
+    res += ''' </ul> <h5>Архив</h5> <ul class="nav sidebar-archive"> ''';
     var archives = getArchives();
     for (var i = 0; i < archives.length; i++) {
       var arch = archives[i];
-      res += ''' <li class="nav-item"> <a class="nav-link pl-0" href="''';
+      res += ''' <li> <a href="''';
       res += '''${sanitize(arch.url)}''';
       res += '''"> ''';
       res += '''${PartialSharedMdiChevronRightView(viewData: viewData)}''';
       res += '''${sanitize(arch.title)}''';
       res += ''' </a> </li> ''';
     }
-    res += ''' </ul> </div> </aside> ''';
+    res += ''' </ul> </nav> </aside> ''';
   }
   return res;
 }
@@ -923,12 +1016,11 @@ String PartialSharedSidebarView({Map<String, dynamic> viewData = const {}}) {
 String PartialSharedSupnavbarView({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
-  res +=
-      '''<div class="supnavbar"> <div class="container d-flex"> <div class="ml-auto social-links"> <a href="#">''';
+  res += '''<div class="supnavbar"> <div class="container"> <a href="#">''';
   res += '''${PartialSharedMdiTwitterView(viewData: viewData)}''';
   res += '''</span></a> <a href="#">''';
   res += '''${PartialSharedMdiFacebookView(viewData: viewData)}''';
-  res += '''</a> </div> </div> </div> ''';
+  res += '''</a> </div> </div> ''';
   return res;
 }
 
@@ -938,23 +1030,22 @@ String SubscribersFormView(Subscriber model,
   viewData = Map.from(viewData);
   viewData['title'] = 'Редактирование подписчика';
   res +=
-      ''' <div class="main-content" role="main"> <form method="post"> <fieldset> <legend>''';
+      ''' <div class="main-content" role="main"> <form method="post"> <h3>''';
   res += '''${sanitize(viewData["title"])}''';
-  res += '''</legend> ''';
+  res += '''</h3> ''';
   res += '''${PartialSharedMessagesView(viewData: viewData)}''';
   res += ''' <input type="hidden" name="id" value="''';
   res += '''${sanitize(model.id)}''';
   res +=
-      '''" > <div class="form-group"> <label class="control-label" for="email">Эл. почта</label> <input id="email" name="email" value="''';
+      '''" > <label for="email">Эл. почта</label> <input id="email" name="email" value="''';
   res += '''${sanitize(model.email)}''';
-  res +=
-      '''" class="form-control" required=""> </div> <button type="submit" class="btn btn-primary">''';
+  res += '''" required=""> <button type="submit" class="btn btn-primary">''';
   res += '''${PartialSharedMdiCheckView(viewData: viewData)}''';
   res += ''' Отправить</button> <a class="btn btn-secondary" href="''';
   res += '''${sanitize(Subscriber.indexUrl)}''';
   res += '''">''';
   res += '''${PartialSharedMdiCancelView(viewData: viewData)}''';
-  res += ''' Отмена</a> </fieldset> </form> </div> ''';
+  res += ''' Отмена</a> </form> </div> ''';
   return LayoutDashboardView(res, viewData: viewData);
 }
 
@@ -966,7 +1057,7 @@ String SubscribersIndexView(List<Subscriber> model,
   res += ''' <div class="main-content" role="main"> <h2>''';
   res += '''${sanitize(viewData["title"])}''';
   res +=
-      '''</h2> <table class="table"> <thead> <tr> <th class="shrink">№</th> <th>Эл. почта</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
+      '''</h2> <table> <thead> <tr> <th class="shrink">№</th> <th>Эл. почта</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
   for (var i = 0; i < model.length; i++) {
     var subscriber = model[i];
     res += ''' <tr> <td class="shrink">''';
@@ -975,12 +1066,12 @@ String SubscribersIndexView(List<Subscriber> model,
     res += '''${sanitize(subscriber.email)}''';
     res += '''</td> <td class="shrink"> <a href="''';
     res += '''${sanitize(subscriber.editUrl)}''';
-    res += '''" class="btn btn-sm btn-primary">''';
+    res += '''" class="btn btn-primary">''';
     res += '''${PartialSharedMdiPencilView(viewData: viewData)}''';
     res += '''</a> <form class="inline-block" action="''';
     res += '''${sanitize(subscriber.deleteUrl)}''';
     res +=
-        '''" method="post"> <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
+        '''" method="post"> <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
     res += '''${PartialSharedMdiDeleteView(viewData: viewData)}''';
     res += '''</button> </form> </td> </tr> ''';
   }
@@ -993,15 +1084,15 @@ String TagsFormView(Tag model, {Map<String, dynamic> viewData = const {}}) {
   viewData = Map.from(viewData);
   viewData['title'] = 'Создание / Редактирование Тэга';
   res +=
-      ''' <div class="main-content" role="main"> <form class="form-horizontal" method="post"> <fieldset> <legend>''';
+      ''' <div class="main-content" role="main"> <form class="form-inline" method="post"> <h3>''';
   res += '''${sanitize(viewData["title"])}''';
-  res += '''</legend> ''';
+  res += '''</h3> ''';
   res += '''${PartialSharedMessagesView(viewData: viewData)}''';
   res +=
-      ''' <div class="form-group"> <label class="control-label" for="title">Название</label> <input id="title" name="title" value="''';
+      ''' <label for="title">Название</label> <input id="title" name="title" value="''';
   res += '''${sanitize(model.title)}''';
   res +=
-      '''" class="form-control" required=""> </div> <div class="form-group"> <input type="submit" class="btn btn-primary" value="Отправить"> <a class="btn btn-secondary" href="/admin/tags/">Отмена</a> </div> </fieldset> </form> </div> <script src="/public/assets/ckeditor/ckeditor.js"></script> ''';
+      '''" required=""> <button type="submit" class="btn btn-primary">Отправить</button> <a class="btn btn-secondary" href="/admin/tags/">Отмена</a> </form> </div> <script src="/public/assets/ckeditor/ckeditor.js"></script> ''';
   return LayoutDashboardView(res, viewData: viewData);
 }
 
@@ -1013,19 +1104,19 @@ String TagsIndexView(List<Tag> model,
   res += ''' <div class="main-content" role="main"> <h2>''';
   res += '''${sanitize(viewData["title"])}''';
   res +=
-      '''</h2> <table class="table"> <thead> <tr> <th>Название</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
+      '''</h2> <table> <thead> <tr> <th>Название</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
   for (var i = 0; i < model.length; i++) {
     var tag = model[i];
     res += ''' <tr> <td>''';
     res += '''${sanitize(tag.title)}''';
     res += '''</td> <td class="shrink"> <a href="''';
     res += '''${sanitize(tag.url)}''';
-    res += '''" class="btn btn-sm btn-secondary">''';
+    res += '''" class="btn btn-secondary">''';
     res += '''${PartialSharedMdiEyeView(viewData: viewData)}''';
     res += '''</a> <form class="inline-block" action="''';
     res += '''${sanitize(tag.deleteUrl)}''';
     res +=
-        '''" method="post"> <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
+        '''" method="post"> <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
     res += '''${PartialSharedMdiDeleteView(viewData: viewData)}''';
     res += '''</button> </form> </td> </tr> ''';
   }
@@ -1051,20 +1142,18 @@ String UsersFormView(User model, {Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   res +=
-      ''' <div class="main-content" role="main"> <form method="post"> <div class="row"> <legend class="col-sm-12">''';
-  res += '''${sanitize(viewData["title"])}''';
-  res += '''</legend> ''';
+      ''' <div class="main-content" role="main"> <form method="post"> <h3>Создание / Редактирование пользователя</h3> ''';
   res += '''${PartialSharedMessagesView(viewData: viewData)}''';
   res += ''' <input type="hidden" name="id" value="''';
   res += '''${sanitize(model.id)}''';
   res +=
-      '''" > <div class="form-group col-sm-6"> <label class="control-label" for="name">Имя</label> <input id="name" name="name" value="''';
+      '''" > <label for="name">Имя</label> <input id="name" name="name" value="''';
   res += '''${sanitize(model.name)}''';
   res +=
-      '''" class="form-control" required> </div> <div class="form-group col-sm-6"> <label class="control-label" for="email">Эл. адрес</label> <input id="email" name="email" value="''';
+      '''" required> <label for="email">Эл. адрес</label> <input id="email" name="email" value="''';
   res += '''${sanitize(model.email)}''';
   res +=
-      '''" class="form-control" required> </div> <div class="form-group col-sm-6"> <label class="control-label" for="password">Пароль</label> <input id="password" name="password" type="password" class="form-control" required> </div> <div class="form-group col-sm-6"> <label class="control-label" for="passwordrepeat">Повторите пароль</label> <input id="passwordrepeat" name="passwordrepeat" type="password" class="form-control" required> </div> <div class="form-group col-sm-12"> <input type="submit" class="btn btn-primary" value="Отправить"> <a class="btn btn-secondary" href="/admin/users/">Отмена</a> </div> </div> </form> </div>''';
+      '''" required> <label for="password">Пароль</label> <input id="password" name="password" type="password" required> <label for="passwordrepeat">Повторите пароль</label> <input id="passwordrepeat" name="passwordrepeat" type="password" required> <button type="submit" class="btn btn-primary">Отправить</button> <a class="btn btn-secondary" href="/admin/users/">Отмена</a> </form> </div>''';
   return LayoutDashboardView(res, viewData: viewData);
 }
 
@@ -1076,7 +1165,7 @@ String UsersIndexView(List<User> model,
   res += ''' <div class="main-content" role="main"> <h2>''';
   res += '''${sanitize(viewData["title"])}''';
   res +=
-      '''</h2> <table class="table"> <thead> <tr> <th class="shrink">№</th> <th>Имя</th> <th>Эл. адрес</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
+      '''</h2> <table> <thead> <tr> <th class="shrink">№</th> <th>Имя</th> <th>Эл. адрес</th> <th class="shrink">Действия</th> </tr> </thead> <tbody> ''';
   for (var i = 0; i < model.length; i++) {
     var user = model[i];
     res += ''' <tr> <td class="shrink">''';
@@ -1087,12 +1176,12 @@ String UsersIndexView(List<User> model,
     res += '''${sanitize(user.email)}''';
     res += '''</td> <td class="shrink"> <a href="''';
     res += '''${sanitize(user.editUrl)}''';
-    res += '''" class="btn btn-sm btn-primary">''';
+    res += '''" class="btn btn-primary">''';
     res += '''${PartialSharedMdiPencilView(viewData: viewData)}''';
     res += '''</a> <form class="inline-block" action="''';
     res += '''${sanitize(user.deleteUrl)}''';
     res +=
-        '''" method="post"> <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
+        '''" method="post"> <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">''';
     res += '''${PartialSharedMdiDeleteView(viewData: viewData)}''';
     res += '''</button> </form> </td> </tr> ''';
   }
@@ -1100,126 +1189,4 @@ String UsersIndexView(List<User> model,
   res += '''${sanitize(User.newUrl)}''';
   res += '''" class="btn btn-primary">Новый пользователь</a> </div> </div> ''';
   return LayoutDashboardView(res, viewData: viewData);
-}
-
-String PartialSharedMdiPencilView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M16.84 2.73c-.39 0-.77.15-1.07.44l-2.12 2.12l5.3 5.31l2.12-2.1c.6-.61.6-1.56 0-2.14L17.9 3.17c-.3-.29-.68-.44-1.06-.44M12.94 6l-8.1 8.11l2.56.28l.18 2.29l2.28.17l.29 2.56l8.1-8.11m-14 3.74L2.5 21.73l6.7-1.79l-.24-2.16l-2.31-.17l-.18-2.32" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiCheckView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59L21 7z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiMinusView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiEyeView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiDeleteView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiCogsView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M15.9 18.45c1.35 0 2.45-1.1 2.45-2.45s-1.1-2.45-2.45-2.45c-1.36 0-2.45 1.1-2.45 2.45s1.09 2.45 2.45 2.45m5.2-1.77l1.48 1.16c.13.11.17.29.08.45l-1.4 2.42a.35.35 0 0 1-.43.15l-1.74-.7c-.36.28-.76.51-1.18.69l-.27 1.85c-.02.17-.17.3-.34.3h-2.8c-.18 0-.32-.13-.35-.3l-.26-1.85c-.43-.18-.82-.41-1.18-.69l-1.75.7c-.15.06-.34 0-.42-.15l-1.4-2.42a.351.351 0 0 1 .08-.45l1.48-1.16l-.05-.68l.05-.69l-1.48-1.15a.353.353 0 0 1-.08-.45l1.4-2.42c.08-.16.27-.22.42-.16l1.75.71c.36-.28.75-.52 1.18-.69l.26-1.86c.03-.16.17-.29.35-.29h2.8c.17 0 .32.13.34.29l.27 1.86c.42.17.82.41 1.18.69l1.74-.71c.17-.06.34 0 .43.16l1.4 2.42c.09.15.05.34-.08.45l-1.48 1.15l.05.69l-.05.68M6.69 8.07c.87 0 1.57-.7 1.57-1.57c0-.87-.7-1.58-1.57-1.58A1.58 1.58 0 0 0 5.11 6.5c0 .87.71 1.57 1.58 1.57m3.34-1.13l.97.74c.07.07.09.19.03.29l-.9 1.56c-.05.1-.17.14-.27.1l-1.12-.45l-.74.44l-.19 1.19c-.02.11-.11.19-.22.19h-1.8c-.12 0-.21-.08-.23-.19L5.4 9.62l-.76-.44l-1.14.45c-.09.04-.2 0-.26-.1l-.9-1.56c-.06-.1-.03-.22.05-.29l.95-.74l-.03-.44l.03-.44l-.95-.74a.229.229 0 0 1-.05-.29l.9-1.56c.06-.1.17-.14.26-.1l1.13.45l.77-.44l.16-1.19c.02-.11.11-.19.23-.19h1.8c.11 0 .2.08.22.19L8 3.38l.74.44l1.12-.45c.1-.04.22 0 .27.1l.9 1.56c.06.1.04.22-.03.29l-.97.74l.03.44l-.03.44z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiLogoutView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M16 17v-3H9v-4h7V7l5 5l-5 5M14 2a2 2 0 0 1 2 2v2h-2V4H5v16h9v-2h2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiWebView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2c0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2c0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2c0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2c0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiCancelView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10S2 17.5 2 12S6.5 2 12 2m0 2c-1.9 0-3.6.6-4.9 1.7l11.2 11.2c1-1.4 1.7-3.1 1.7-4.9c0-4.4-3.6-8-8-8m4.9 14.3L5.7 7.1C4.6 8.4 4 10.1 4 12c0 4.4 3.6 8 8 8c1.9 0 3.6-.6 4.9-1.7z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiPlusView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiTwitterView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69c.88-.53 1.56-1.37 1.88-2.38c-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29c0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15c0 1.49.75 2.81 1.91 3.56c-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07a4.28 4.28 0 0 0 4 2.98a8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21C16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56c.84-.6 1.56-1.36 2.14-2.23z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiFacebookView(
-    {Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89c1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiChevronRightView(
-    {Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12L8.59 7.41L10 6l6 6l-6 6l-1.41-1.42z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiEmailView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6m-2 0l-8 5l-8-5h16m0 12H4V8l8 5l8-5v10z" fill="currentColor"/></svg>''';
-  return res;
-}
-
-String PartialSharedMdiCommentView({Map<String, dynamic> viewData = const {}}) {
-  String res = '';
-  viewData = Map.from(viewData);
-  res +=
-      '''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M9 22a1 1 0 0 1-1-1v-3H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.1l-3.7 3.71c-.2.19-.45.29-.7.29H9z" fill="currentColor"/></svg>''';
-  return res;
 }

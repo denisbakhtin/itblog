@@ -21,6 +21,7 @@ dependencies:
   shelf_body_parser:
     git: https://github.com/denisbakhtin/shelf_body_parser
   html: ^0.15.0
+  shelf_hotreload: ^1.0.0
 
 dev_dependencies:
   build_runner: ^2.1.5 

@@ -1,39 +1,28 @@
 @{var user = viewData['user'];}
 <aside class="dashboard-sidebar">
-  <div class="well well-sm user-info">
-    <h5>Профиль</h5>
-    <div class="dropdown">
-      <button class="btn btn-default dropdown-toggle text-uppercase" type="button" id="dropdownSettingsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        @renderPartial("shared/_mdi_cogs") настройки
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownSettingsButton">
-        <a class="dropdown-item" href="@user.editUrl">@renderPartial("shared/_mdi_pencil")</i>Редактировать</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="/logout">@renderPartial("shared/_mdi_logout") Выйти</a>
-      </div>
-    </div>
-    <span class="email">@user.email</span>
-  </div>
-
-  <h5>Навигация</h5>
-  <ul class="nav flex-column nav-pills">
-    <li class="nav-item">
-      <a class="nav-link" href="@Post.indexUrl">@renderPartial("shared/_mdi_chevron_right") Записи</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="@Tag.indexUrl">@renderPartial("shared/_mdi_chevron_right") Тэги</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="@Comment.indexUrl">@renderPartial("shared/_mdi_chevron_right") Комментарии</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="@Page.indexUrl">@renderPartial("shared/_mdi_chevron_right") Страницы</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="@Subscriber.indexUrl">@renderPartial("shared/_mdi_chevron_right") Подписчики</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="@User.indexUrl">@renderPartial("shared/_mdi_chevron_right") Пользователи</a>
-    </li>
-  </ul>
+  <nav>
+    <ul>
+      <li>
+        <a href="@Post.indexUrl">@renderPartial("shared/_mdi_chevron_right") Записи</a>
+      </li>
+      <li>
+        <a href="@Tag.indexUrl">@renderPartial("shared/_mdi_chevron_right") Тэги</a>
+      </li>
+      <li>
+        <a href="@Comment.indexUrl">@renderPartial("shared/_mdi_chevron_right") Комментарии</a>
+      </li>
+      <li>
+        <a href="@Page.indexUrl">@renderPartial("shared/_mdi_chevron_right") Страницы</a>
+      </li>
+      <li>
+        <a href="@Subscriber.indexUrl">@renderPartial("shared/_mdi_chevron_right") Подписчики</a>
+      </li>
+      <li>
+        <a href="@User.indexUrl">@renderPartial("shared/_mdi_chevron_right") Пользователи</a>
+      </li>
+      <li>
+        <a href="@user.editUrl">@renderPartial("shared/_mdi_chevron_right")</i> Аккаунт</a>
+      </li>
+    </ul>
+  </nav>
 </aside>

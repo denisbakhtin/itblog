@@ -1,6 +1,6 @@
 ---
 - name: Deploy web-site
-  hosts: ocean
+  hosts: do
   gather_facts: no
   vars:
     ansible_python_interpreter: /usr/bin/python
@@ -10,41 +10,41 @@
 #      private: no
 
   tasks:
-    - name: copy to tmp subfolder for native compilation
-      delegate_to: localhost
-      synchronize:
-        src: '{{playbook_dir}}'
-        dest: '{{playbook_dir}}/tmp'
-        rsync_opts:
-          - "--exclude=.dart_tool"
-          - "--exclude=.git"
-          - "--exclude=tmp"
-
-    - meta: end_play
-
-    - name: webpack build for production
-      delegate_to: localhost
-      shell: webpack
-
-    - name: git push
-      delegate_to: localhost
-      shell: git add -A && git commit -m "{{ commit }}" ; git push origin master
-
-    - name: git pull
-      shell: cd /home/tabula/denisbakhtin/itblog && git pull origin master
-
     - name: stop service
       shell: systemctl stop itblog
       become: yes
 
-    - name: clean old binaries (itblog-go & periodic-go)
-      shell: cd /home/tabula/denisbakhtin/itblog && rm -rf *-go
+        #    - name: git push
+        #      delegate_to: localhost
+        #      shell: git add -A && git commit -m "{{ commit }}" ; git push origin master
+
+        #    - name: git pull
+        #      shell: cd /home/tabula/denisbakhtin/itblog && git pull origin master
 
     - name: build new binary
-      shell: cd /home/tabula/denisbakhtin/itblog && /home/tabula/golang/bin/go build -o itblog-go
+      delegate_to: localhost
+      shell: cd /home/tabula/dart/itblog && make release
 
-    - name: build new periodic command binary
-      shell: cd /home/tabula/denisbakhtin/itblog && /home/tabula/golang/bin/go build -o periodic-go cmd/periodical/main.go
+    - name: clean old binaries
+      shell: cd /home/tabula/itblog && rm -f main
+
+    - name: copy binary to remote host
+      copy:
+        src: /home/tabula/dart/itblog/lib/main
+        dest: /home/tabula/itblog/main
+
+    - name: copy application.js to remote host
+      copy:
+        src: /home/tabula/dart/itblog/lib/public/assets/application.js
+        dest: /home/tabula/itblog/lib/public/assets/application.js
+
+    - name: copy application.css to remote host
+      copy:
+        src: /home/tabula/dart/itblog/lib/public/assets/application.css
+        dest: /home/tabula/itblog/lib/public/assets/application.css
+
+    - name: mark binary as executable
+      shell: cd /home/tabula/itblog && chmod +x main
 
     - name: start service
       shell: systemctl start itblog

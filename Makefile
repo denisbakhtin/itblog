@@ -3,10 +3,6 @@ MAKEFLAGS += -j3
 #consider moving to task, but it can not run long tasks in parallel
 watch: build_runner_watch
 
-webpack_watch:
-	@echo "Running webpack watch"
-	@webpack --watch --mode=development
-
 debug:
 	@echo "Running dart server"
 	@dart run --observe  lib/main.dart
@@ -16,11 +12,11 @@ run:
 	dart run --enable-vm-service lib/main.dart 
 
 release: 
-	@echo "Running pub get"
-	@dart pub get
+	#@echo "Running pub get"
+	#@dart pub get
 	@echo "Running release build"
 	@dart compile exe lib/main.dart -o lib/main
-	@webpack
+	#@webpack
 
 build_runner_watch:
 	@echo "Running build_runner watch"
@@ -28,15 +24,7 @@ build_runner_watch:
 
 #all-in-one ansible command for deployment
 deploy:
-	ansible-playbook deploy.yml -i ~/ansible/inventory -K
-
-npm_install:
-	sudo npm i -g npm-check-updates
-	ncu -u
-	npm i
-npm_update:
-	ncu -u
-	npm i
+	ansible-playbook deploy.yml -K
 
 test: test_config test_db test_controller
 

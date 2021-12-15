@@ -2,10 +2,8 @@
   var recentPosts = getRecentPosts();
 }
 
-@for(var i = 0; i < recentPosts.length; i++) {
-  @renderPartial("posts/_preview", recentPosts[i])  
-}
-
-<div class="mt-5 mb-4 text-center">
-  <a class="btn btn-primary btn-lg" href="/posts">Мой блог</a>
+<div id="main-column" class="mr-0">
+  @for(var i = 0; i < recentPosts.length; i++) {
+    @renderPartial("posts/_preview", recentPosts[i])  
+  }
 </div>

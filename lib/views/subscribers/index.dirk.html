@@ -7,7 +7,7 @@
 
 <div class="main-content" role="main">
   <h2>@(viewData["title"])</h2>
-  <table class="table">
+  <table>
     <thead>
       <tr>
         <th class="shrink">№</th>
@@ -22,9 +22,9 @@
           <td class="shrink">@subscriber.id</td>
           <td>@subscriber.email</td>
           <td class="shrink">
-            <a href="@subscriber.editUrl" class="btn btn-sm btn-primary">@renderPartial("shared/_mdi_pencil")</a>
+            <a href="@subscriber.editUrl" class="btn btn-primary">@renderPartial("shared/_mdi_pencil")</a>
             <form class="inline-block" action="@subscriber.deleteUrl" method="post">
-              <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">@renderPartial("shared/_mdi_delete")</button>
+              <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">@renderPartial("shared/_mdi_delete")</button>
             </form>
           </td>
         </tr>

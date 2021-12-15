@@ -42,9 +42,10 @@ class Config {
   final String cookieSecret;
   final bool isSignupEnabled;
   final String siteName;
+  final String mode;
 
   Config(this.port, this.database, this.cookieSecret, this.isSignupEnabled,
-      this.siteName);
+      this.siteName, this.mode);
 
   factory Config.fromJson(Map<String, dynamic> map) {
     return Config(
@@ -53,6 +54,7 @@ class Config {
       toStr(map['cookie_secret']),
       toBool(map['is_signup_enabled']),
       toStr(map['site_name']),
+      toStr(map['mode']),
     );
   }
 }

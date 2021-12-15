@@ -7,49 +7,39 @@
 
 <div class="main-content" role="main">
   <form method="post">
-    <fieldset>
-      <legend>@(viewData["title"])</legend>
-      @renderPartial("shared/_messages")
-      <input type="hidden" name="id" value="@model.id" >
-      
-      <div class="form-group">
-        <label class="control-label" for="title">Заголовок</label>
-        <input id="title" name="title" value="@model.title" class="form-control" required="">
-      </div>
+    <h3>@(viewData["title"])</h3>
+    @renderPartial("shared/_messages")
+    <input type="hidden" name="id" value="@model.id" >
+    
+    <label for="title">Заголовок</label>
+    <input id="title" name="title" value="@model.title" required="">
 
-      <div class="form-group">
-        <label class="control-label" for="ck-content">Содержание</label>
-        <textarea name="content" id="ck-content">@model.content</textarea>
-      </div>
+    <label for="ck-content">Содержание</label>
+    <textarea name="content" id="ck-content">@model.content</textarea>
 
-      <div class="form-group">
-        <label class="control-label" for="tags">Тэги</label>
-        <select id="tags" name="tags[]" class="form-control" multiple="multiple">
-          @{var tags = getTags();}
-          @for(var i = 0; i < tags.length; i++) {
-            @{var tag = tags[i];}
-            @if (model.tags?.any((e) => e.id == tag.id) ?? false) {
-              <option selected>@tag.title</option>
-            } else {
-              <option>@tag.title</option>
-            }            
-          }
-        </select>
-      </div>
+    <label for="tags">Тэги</label>
+    <select id="tags" name="tags[]" multiple="multiple">
+      @{var tags = getTags();}
+      @for(var i = 0; i < tags.length; i++) {
+        @{var tag = tags[i];}
+        @if (model.tags?.any((e) => e.id == tag.id) ?? false) {
+          <option selected>@tag.title</option>
+        } else {
+          <option>@tag.title</option>
+        }            
+      }
+    </select>
 
-      <div class="form-group">
-        <label class="control-label">Мета описание</label>
-        <textarea name="meta_description" id="meta_description" class="form-control">@model.metaDescription</textarea>
-      </div>
+    <label>Мета описание</label>
+    <textarea name="meta_description" id="meta_description">@model.metaDescription</textarea>
 
-      <div class="form-group form-check">
-        <input id="published" name="published" type="checkbox" class="form-check-input" value="1" @if (model.published == 1) {checked}>
-        <label class="control-label" for="published" class="form-check-label">Опубликовать</label>
-      </div>
+    <div class="d-flex mb-10">
+      <input id="published" name="published" type="checkbox" value="1" @if (model.published == 1) {checked}>
+      <label for="published">Опубликовать</label>
+    </div>
 
-      <button type="submit" class="btn btn-primary">@renderPartial("shared/_mdi_check") Отправить</button>
-      <a class="btn btn-secondary" href="@Post.indexUrl">@renderPartial("shared/_mdi_cancel") Отмена</a>
-    </fieldset>
+    <button type="submit" class="btn btn-primary">@renderPartial("shared/_mdi_check") Отправить</button>
+    <a class="btn btn-secondary" href="@Post.indexUrl">@renderPartial("shared/_mdi_cancel") Отмена</a>
   </form>
 </div>
 

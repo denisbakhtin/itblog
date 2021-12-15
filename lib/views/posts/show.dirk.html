@@ -7,7 +7,7 @@
   <h1>
     @model.title
     @if (viewData['isAuthenticated'] ?? false) {
-      <a class="btn btn-outline-primary btn-sm ml-2" href="@model.editUrl">@renderPartial("shared/_mdi_pencil") Редактировать</a>
+      <a class="btn btn-outline-primary" href="@model.editUrl">@renderPartial("shared/_mdi_pencil") Редактировать</a>
     }
   </h1>
 

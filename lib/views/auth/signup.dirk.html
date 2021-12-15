@@ -2,32 +2,22 @@
   viewData['title'] = 'Регистрация';
 }
 
-<div class="container" role="main">
-    <div class="card auth-card">
-	<div class="card-body">
-	    <form method="post">
-		<h4 class="card-title">Регистрация</h4>
+<div class="auth-card">
+	<form method="post">
+		<h4>Регистрация</h4>
 		@renderPartial("shared/_messages")
 
-		<div class="form-group">
-		    <label class="control-label" for="name">Имя</label>
-		    <input id="name" name="name" placeholder="Ваше имя" class="form-control input-md" required>
-		</div>
+		<label for="name">Имя</label>
+		<input id="name" name="name" placeholder="Ваше имя" required>
 
-		<div class="form-group">
-		    <label class="control-label" for="email">Эл. почта</label>
-		    <input id="email" name="email" type="email" placeholder="Ваша эл. почта" class="form-control input-md" required>
-		</div>
+		<label for="email">Эл. почта</label>
+		<input id="email" name="email" type="email" placeholder="Ваша эл. почта" required>
 
-		<div class="form-group">
-		    <label class="control-label" for="password">Пароль</label>
-		    <input id="password" name="password" type="password" placeholder="Ваш пароль" class="form-control input-md" required>
-		</div>
+		<label for="password">Пароль</label>
+		<input id="password" name="password" type="password" placeholder="Ваш пароль" required>
 
-		<div class="form-group">
-		    <label class="control-label" for="passwordrepeat">Повторите пароль</label>
-		    <input id="passwordrepeat" name="passwordrepeat" type="password" placeholder="Ваш пароль" class="form-control input-md" required>
-		</div>
+		<label for="passwordrepeat">Повторите пароль</label>
+		<input id="passwordrepeat" name="passwordrepeat" type="password" placeholder="Ваш пароль" required>
 
 		@if (viewData['error'] == '1') {
 		<p class="text-danger">Пользователь с такой почтой уже существует</p>
@@ -37,7 +27,5 @@
 		}
 
 		<button id="signup" name="signup" class="btn btn-primary">Регистрация</button>
-	    </form>
-	</div>
-    </div>
+	</form>
 </div>

@@ -12,15 +12,11 @@
       @renderPartial("shared/_messages")
       <input type="hidden" name="id" value="@model.id" >
       
-      <div class="form-group">
-        <label class="control-label" for="title">Заголовок</label>
-        <input id="title" name="title" value="@model.title" class="form-control" required="">
-      </div>
+      <label for="title">Заголовок</label>
+      <input id="title" name="title" value="@model.title" required="">
 
-      <div class="form-group">
-        <label class="control-label" for="ck-content">Содержание</label>
-        <textarea name="content" id="ck-content">@model.content</textarea>
-      </div>
+      <label for="ck-content">Содержание</label>
+      <textarea name="content" id="ck-content">@model.content</textarea>
 
       <button type="submit" class="btn btn-primary">@renderPartial("shared/_mdi_check")  Отправить</button>
       <a class="btn btn-secondary" href="@Mailing.indexUrl">@renderPartial("shared/_mdi_cancel") Отмена</a>

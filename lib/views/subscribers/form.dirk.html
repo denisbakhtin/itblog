@@ -7,18 +7,14 @@
 
 <div class="main-content" role="main">
   <form method="post">
-    <fieldset>
-      <legend>@(viewData["title"])</legend>
-      @renderPartial("shared/_messages")
-      <input type="hidden" name="id" value="@model.id" >
-      
-      <div class="form-group">
-        <label class="control-label" for="email">Эл. почта</label>
-        <input id="email" name="email" value="@model.email" class="form-control" required="">
-      </div>
+    <h3>@(viewData["title"])</h3>
+    @renderPartial("shared/_messages")
+    <input type="hidden" name="id" value="@model.id" >
+    
+    <label for="email">Эл. почта</label>
+    <input id="email" name="email" value="@model.email" required="">
 
-      <button type="submit" class="btn btn-primary">@renderPartial("shared/_mdi_check") Отправить</button>
-      <a class="btn btn-secondary" href="@Subscriber.indexUrl">@renderPartial("shared/_mdi_cancel") Отмена</a>
-    </fieldset>
+    <button type="submit" class="btn btn-primary">@renderPartial("shared/_mdi_check") Отправить</button>
+    <a class="btn btn-secondary" href="@Subscriber.indexUrl">@renderPartial("shared/_mdi_cancel") Отмена</a>
   </form>
 </div>
