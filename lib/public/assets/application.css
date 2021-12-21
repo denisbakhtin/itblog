@@ -38,6 +38,7 @@ body {
     font-style: normal;
     min-height: 100vh;
     font-family: 'Montserrat', sans-serif;
+    position: relative;
 }
 
 body>.container {
@@ -242,6 +243,11 @@ textarea.form-control {
 
 .mr-0 {
   margin-right: 0!important;
+}
+
+#main-column .content figure {
+    padding: 0;
+    margin: 0;
 }
 
 #main-column .content figure img,
@@ -492,6 +498,10 @@ nav ul {
 
 .ck-content {
     min-height: 20em;
+}
+
+.ck-body-wrapper {
+    z-index:10000;
 }
 
 .btn {
