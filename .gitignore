@@ -2,6 +2,7 @@ lib/config.json
 lib/release.db
 lib/debug.db
 lib/main
+lib/public/uploads/
 node_modules
 itblog
 itblog.service
