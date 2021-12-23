@@ -8,3 +8,6 @@ export 'breadcrumb.dart';
 export 'helpers.dart';
 export 'db.dart';
 export 'auth.dart';
+export 'subscriber.dart';
+export 'mailing.dart';
+export 'pagination.dart';

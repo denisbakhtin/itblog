@@ -18,10 +18,11 @@ class Page {
     this.slug = '',
   }) {}
 
-  String get url => "/pages/$id-$slug";
-  static String get newUrl => "/admin/new_page";
-  String get editUrl => "/admin/edit_page/$id";
-  String get deleteUrl => "/admin/delete_page/$id";
+  String get url => "/pages/$id/$slug";
+  static String get indexUrl => "/admin/pages";
+  static String get newUrl => "/admin/pages/new";
+  String get editUrl => "/admin/pages/edit/$id";
+  String get deleteUrl => "/admin/pages/delete/$id";
 
   factory Page.fromMap(Map<String, dynamic> map) {
     return Page(

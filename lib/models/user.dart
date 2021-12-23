@@ -8,9 +8,10 @@ class User {
   User({this.id = 0, this.email = '', this.name = '', this.password = ''});
 
   String get url => "/admin/users/$id";
-  static String get newUrl => "/admin/new_user";
-  String get editUrl => "/admin/edit_user/$id";
-  String get deleteUrl => "/admin/delete_user/$id";
+  static String get indexUrl => "/admin/users";
+  static String get newUrl => "/admin/users/new";
+  String get editUrl => "/admin/users/edit/$id";
+  String get deleteUrl => "/admin/users/delete/$id";
 
   bool hasPassword(String pass) => password == toCryptoHash(pass);
 

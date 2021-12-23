@@ -6,7 +6,7 @@ import 'package:itblog/models/data.dart';
 
 void Setup() {
   File("lib/models/debug.db").copySync("lib/models/test.db");
-  var config = Config.load(Mode.test);
+  var config = Configs.load().mode('test');
   var db = DB(config.database);
   final injector = Injector.appInstance;
   injector.registerSingleton<DB>(() => db);

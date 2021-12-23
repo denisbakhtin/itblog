@@ -8,16 +8,37 @@
 		<meta name="description" content="@(viewData['MetaDescription'])">
 		<link rel="alternate" type="application/rss+xml" title="ITBlog rss" href="/rss" />
 		@renderPartial("shared/_favicon")
-		<title>@(viewData['title'])</title>
-		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@@mdi/font@@5.9.55/css/materialdesignicons.min.css">
+		@if (viewData['title'] != null) {
+			<title>@(viewData['title']) | @(viewData['name'])</title>	
+		} else {
+			<title>@(viewData['name'])</title>
+		}		
+		@if (viewData['meta_description'] != null && viewData['meta_description'] != '') {
+			<meta name="description" content="@(viewData['meta_description'])">
+		}
+		<meta name="author" content="Denis Bakhtin">
+		@if (viewData['canonical'] != null) {
+			<link rel="canonical" href="@(viewData['canonical'])" />
+		}
+		@if (viewData['prev'] != null) {
+			<link rel="prev" href="@(viewData['prev'])" />
+		}
+		@if (viewData['next'] != null) {
+			<link rel="next" href="@(viewData['next'])" />
+		}
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@@400;500&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="/public/assets/main.css">
+		<link rel="stylesheet" href="/public/assets/application.css">
 	</head>
-	<body>
+	<body class="public-body">
 		@renderPartial("shared/_supnavbar")
 		@renderPartial("shared/_navbar")
 
-		@renderBody()
+		@renderPartial("home/_intro")
+
+		<div class="container content-wrapper" role="main">
+			@renderBody()
+			@renderPartial("shared/_sidebar")
+		</div>
 
 		@renderPartial("shared/_footer")
 		<!-- Include all compiled plugins (below), or include individual files as needed -->

@@ -1,0 +1,27 @@
+@import 'package:itblog/models/data.dart'
+@type Mailing
+@layout layout_dashboard
+@{
+   viewData['title'] = 'Создание / Редактирование Рассылки';
+}
+
+<div class="main-content" role="main">
+  <form method="post">
+    <fieldset>
+      <legend>@(viewData["title"])</legend>
+      @renderPartial("shared/_messages")
+      <input type="hidden" name="id" value="@model.id" >
+      
+      <label for="title">Заголовок</label>
+      <input id="title" name="title" value="@model.title" required="">
+
+      <label for="ck-content">Содержание</label>
+      <textarea name="content" id="ck-content">@model.content</textarea>
+
+      <button type="submit" class="btn btn-primary">@renderPartial("shared/_mdi_check")  Отправить</button>
+      <a class="btn btn-secondary" href="@Mailing.indexUrl">@renderPartial("shared/_mdi_cancel") Отмена</a>
+    </fieldset>
+  </form>
+</div>
+
+<script src="/public/assets/ckeditor/ckeditor.js"></script>

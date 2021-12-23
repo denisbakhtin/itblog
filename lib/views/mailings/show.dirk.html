@@ -1,0 +1,11 @@
+@import 'package:itblog/models/data.dart';
+@type Mailing
+@{
+  viewData['title'] = model.title;  
+}
+
+<div id="main-column">
+  <h1>@model.title</h1>
+
+  <div class="content">@model.content</div>   
+</div>

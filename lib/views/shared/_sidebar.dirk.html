@@ -1,37 +1,47 @@
+@if (!(viewData['hideSidebar'] ?? false)) {
 <aside id="sidebar">
-  <div>
-    <h5>Тэги</h5>
-    <ul class="nav sidebar-tags">
-			@{var tags = getTags();}
-			@for(var i = 0; i < tags.length; i++) {
-        <li class="nav-item">
-          <a class="nav-link" href="@tags[i].url">@tags[i].title</a>
-        </li>
-			}
-    </ul>
-    
-    <h5>Последние записи</h5>
-    <ul class="nav flex-column">
-			@{var recentPosts = getRecentPosts();}
-			@for(var i = 0; i < recentPosts.length; i++) {
-				@{var post = recentPosts[i];}
-				<li class="nav-item">
-					<a class="nav-link d-block" href="@post.url">
-						<img class="img-fluid" src="@post.getImage()" />
-						<h4 class="mb-0">@post.title</h4>
-					</a>
-				</li>
-			}
-    </ul>
-    
-    <h5>Архив</h5>
-    <ul class="nav flex-column">
-			@{var archives = getArchives();}
-			@for(var i = 0; i < archives.length; i++) {
-				<li class="nav-item">
-					<a class="nav-link" href="@archives[i].url">@archives[i].title</a>
-				</li>
-			}
-    </ul>
-  </div>
+    <nav>
+	<h5>Тэги</h5>
+	<ul class="nav sidebar-tags">
+	    @{var tags = getTags();}
+	    @for(var i = 0; i < tags.length; i++) {
+	    @{var tag = tags[i];}
+            <li>
+				<a href="@tag.url">@tag.title</a>
+            </li>
+	    }
+	</ul>
+	
+	<h5>Последние записи</h5>
+	<ul class="nav sidebar-posts">
+	    @{var recentPosts = getRecentPosts();}
+	    @for(var i = 0; i < recentPosts.length; i++) {
+	    @{var post = recentPosts[i];}
+	    <li>
+			<a href="@post.url">
+				@{var src = post.getImage();}
+				@if (src.length > 0) {
+					<img src="@post.getImage()" />
+				}
+				<h6>@post.title</h6>
+			</a>
+	    </li>
+	    }
+	</ul>
+	
+	<h5>Архив</h5>
+	<ul class="nav sidebar-archive">
+	    @{var archives = getArchives();}
+	    @for(var i = 0; i < archives.length; i++) {
+			@{var arch = archives[i];}
+			<li>
+				<a href="@arch.url">
+					@renderPartial("shared/_mdi_chevron_right")
+					@arch.title
+				</a>
+			</li>
+	    }
+	</ul>
+	</nav>
 </aside>
+}

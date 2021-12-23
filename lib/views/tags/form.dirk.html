@@ -1,23 +1,21 @@
 @import 'package:itblog/models/data.dart';
 @type Tag
+@layout layout_dashboard
+@{
+  viewData['title'] = 'Создание / Редактирование Тэга';
+}
 
-<div class="content-wrapper">
-	@renderPartial("dashboard/_sidebar")
-  <div class="main-content" role="main">
-    <form class="form-horizontal" method="post">
-			<fieldset>
-				<legend>@(viewData["title"])</legend>
-				@renderPartial("shared/_messages")
-				<div class="form-group">
-					<label class="control-label" for="title">Название</label>
-					<input id="title" name="title" value="@model.title" class="form-control" required="">
-				</div>
+<div class="main-content" role="main">
+	<form class="form-inline" method="post">
+		<h3>@(viewData["title"])</h3>
+		@renderPartial("shared/_messages")
+		
+		<label for="title">Название</label>
+		<input id="title" name="title" value="@model.title" required="">
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary" value="Отправить">
-					<a class="btn btn-secondary" href="/admin/tags">Отмена</a>
-				</div>
-			</fieldset>
-    </form>
-  </div>
+		<button type="submit" class="btn btn-primary">Отправить</button>
+		<a class="btn btn-secondary" href="/admin/tags/">Отмена</a>
+	</form>
 </div>
+
+<script src="/public/assets/ckeditor/ckeditor.js"></script>

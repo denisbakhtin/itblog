@@ -1,47 +1,48 @@
 @import 'package:itblog/models/data.dart';
 @type List<Comment>
-
-<div class="content-wrapper">
-	@renderPartial("dashboard/_sidebar")
-  <div class="main-content" role="main">
-    <h2>@(viewData["title"])</h2>
-    <table class="table">
-      <thead>
+@layout layout_dashboard
+@{
+  viewData['title'] = 'Комментарии';
+}
+    
+<div class="main-content" role="main">
+  <h2>@(viewData["title"])</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="shrink">№</th>
+        <th>Имя</th>
+        <th>Комментарий</th>
+        <th class="shrink">Опубликовано</th>
+        <th class="shrink">Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (var i = 0; i < model.length; i++) {
+        @{var comment = model[i];}
         <tr>
-          <th class="shrink">№</th>
-          <th>Имя</th>
-          <th>Комментарий</th>
-          <th class="shrink">Опубликовано</th>
-          <th class="shrink">Действия</th>
+          <td class="shrink">@comment.id</td>
+          <td>@comment.plainName</td>
+          <td>@comment.excerpt</td>
+          <td class="shrink">
+            @if (comment.published == 1) {
+              @renderPartial("shared/_mdi_check")
+            } else {
+              @renderPartial("shared/_mdi_minus")
+            }
+          </td>
+          <td class="shrink">
+            <a href="@comment.url" class="btn btn-secondary">@renderPartial("shared/_mdi_eye")</a>
+            <a href="@comment.editUrl" class="btn btn-primary">@renderPartial("shared/_mdi_pencil")</a>
+            <form class="inline-block" action="@comment.deleteUrl" method="post">
+              <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">@renderPartial("shared/_mdi_delete")</button>
+            </form>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-				@for (var i = 0; i < model.length; i++) {
-					@{var comment = model[i];}
-          <tr>
-            <td class="shrink">@comment.id</td>
-            <td>@comment.userName</td>
-            <td>@comment.excerpt</td>
-            <td class="shrink">
-							@if (comment.published == 1) {
-                <span class="mdi mdi-check"></span>
-							} else {
-                <span class="mdi mdi-minus"></span>
-							}
-            </td>
-            <td class="shrink">
-              <a href="/posts/{{.PostID}}#comment-{{.ID}}" class="btn btn-sm btn-secondary"><i class="mdi mdi-eye"></i></a>
-              <a href="@comment.editUrl" class="btn btn-sm btn-primary"><i class="mdi mdi-pencil"></i></a>
-              <form class="inline-block" action="@comment.deleteUrl" method="post">
-                <button type="button" class="btn btn-sm btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);"><i class="mdi mdi-delete"></i></button>
-              </form>
-            </td>
-          </tr>
-				}
-      </tbody>
-    </table>
-    <div class="actions">
-      <a href="/admin/new_comment" class="btn btn-primary">Новый комментарий</a>
-    </div>
+      }
+    </tbody>
+  </table>
+  <div class="actions">
+    <a href="/admin/new_comment" class="btn btn-primary">Новый комментарий</a>
   </div>
 </div>

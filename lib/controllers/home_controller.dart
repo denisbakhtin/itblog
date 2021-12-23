@@ -1,3 +1,4 @@
+import 'package:itblog/controllers/helpers.dart';
 import 'package:itblog/views/views.dart';
 
 import 'http/shelf.dart';
@@ -10,12 +11,16 @@ class HomeController {
 //    final router = Router();
 //
 //    router.get('/', (Request request) async {
-//      return HtmlResponse.ok('Home page design #2');
+//      return Response.ok('Home page design #2');
 //    });
 //
 //    return router;
 //  }
   static Future<Response> Index(Request request) async {
-    return HtmlResponse.ok(HomeShowView(viewData: {'title': 'Home page'}));
+    var vd = viewData(request);
+    return Response.ok(HomeShowView(
+        viewData: vd
+          ..['hideSidebar'] = true
+          ..['meta_description'] = ''));
   }
 }

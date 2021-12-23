@@ -20,9 +20,10 @@ class Tag {
       this.posts = const []});
 
   String get url => "/tags/$slug";
-  String get newUrl => "/admin/new_tag";
-  String get editUrl => "/admin/edit_tag/$id";
-  String get deleteUrl => "/admin/delete_tag/$id";
+  static String get indexUrl => "/admin/tags";
+  static String get newUrl => "/admin/tags/new";
+  String get editUrl => "/admin/tags/edit/$id";
+  String get deleteUrl => "/admin/tags/delete/$id";
 
   factory Tag.fromMap(Map<String, dynamic> map) {
     return Tag(

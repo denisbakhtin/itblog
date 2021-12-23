@@ -1,36 +1,32 @@
 @import 'package:itblog/models/data.dart';
 @type Comment
+@layout layout_dashboard
+@{
+   viewData['title'] = 'Создание / Редактирование Комментария';
+}
 
-<div class="content-wrapper">
-	@renderPartial("dashboard/_sidebar")
-  <div class="main-content" role="main">
-    <form method="post">
-      <fieldset>
-        <legend>@(viewData["title"])</legend>
-				@renderPartial("shared/_messages")
-        <input type="hidden" name="id" value="@model.id" >
-        
-        <div class="form-group">
-          <label class="control-label" for="content">Content</label>
-          <textarea name="content" class="form-control" id="content">@model.content</textarea>
-        </div>
+<div class="main-content" role="main">
+  <form method="post">
+    <h3>@(viewData["title"])</h3>
+    @renderPartial("shared/_messages")
+    <input type="hidden" name="id" value="@model.id" >
+    
+    <label for="content">Содержание</label>
+    <textarea name="content" id="content">@model.content</textarea>
 
-        <div class="form-group">
-          <label class="control-label" for="post_id">Post: @model.post?.title</label>
-        </div>
+    @if (model.post != null) {
+      <label for="post_id">Пост: <a
+           href="@(model.post!.url)">@(model.post!.title)</a></label>
+    }
 
-        <div class="form-group">
-          <label class="control-label" for="user_name">Пользователь: @model.userName</label>
-        </div>
+    <label for="user_name">Пользователь: @model.plainName</label>
 
-        <div class="form-group">
-					<input id="published" name="published" type="checkbox" value="1" @if (model.published == 1) {checked} >
-          <label class="control-label" for="published">Опубликовать</label>
-        </div>
+    <div class="d-flex mb-10">
+      <input id="published" name="published" type="checkbox" value="1" @if (model.published == 1) {checked}>
+      <label for="published">Опубликовать</label>
+    </div>
 
-        <input type="submit" class="btn btn-primary" value="Отправить">
-        <a class="btn btn-secondary" href="/admin/comments">Отмена</a>
-      </fieldset>
-    </form>
-  </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+    <a class="btn btn-secondary" href="/admin/comments">Отмена</a>
+  </form>
 </div>

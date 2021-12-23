@@ -1,0 +1,20 @@
+@import 'package:itblog/models/data.dart'
+@type Subscriber
+@layout layout_dashboard
+@{
+   viewData['title'] = 'Редактирование подписчика';
+}
+
+<div class="main-content" role="main">
+  <form method="post">
+    <h3>@(viewData["title"])</h3>
+    @renderPartial("shared/_messages")
+    <input type="hidden" name="id" value="@model.id" >
+    
+    <label for="email">Эл. почта</label>
+    <input id="email" name="email" value="@model.email" required="">
+
+    <button type="submit" class="btn btn-primary">@renderPartial("shared/_mdi_check") Отправить</button>
+    <a class="btn btn-secondary" href="@Subscriber.indexUrl">@renderPartial("shared/_mdi_cancel") Отмена</a>
+  </form>
+</div>

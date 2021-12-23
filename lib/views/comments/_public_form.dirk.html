@@ -1,28 +1,13 @@
 @import 'package:itblog/models/data.dart';
 @import 'package:itblog/controllers/helpers.dart';
-@type Post
+@type Comment
 
-<div class="card public-comment mb-4">
-	<div class="card-body">
-		@renderPartial("shared/_messages")
-		@{var name = getOauthName();}
-		@if (name.isNotEmpty) {
-			<form method="post" action="/new_comment">
-				<input type="hidden" name="post_id" value="@model.id">
-				<input type="hidden" name="published" value="1">
-				<input type="hidden" name="user_name" value="@name">
-				
-				<div class="form-group">
-					<textarea name="content" class="form-control" placeholder="Введите ваш комментарий" id="content"></textarea>
-				</div>
+<form method="post" action="/comments/new">
+  <input type="hidden" name="post_id" value="@model.postId">
+  <input type="text" name="user_name" placeholder="Представьтесь" required>
+    
+  <textarea name="content" placeholder="Введите ваш комментарий" id="content"
+    required></textarea>
 
-				<input type="submit" class="btn btn-primary" value="Отправить">
-			</form>
-		} else {
-			<div class="text-center">
-				<p>Войдите с помощью учетной записи Гугл</p>
-				<a class="btn btn-primary" href="/oauthgooglelogin">Войти</a>
-			</div>
-		}
-	</div>
-</div>
+  <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
