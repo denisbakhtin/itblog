@@ -676,7 +676,10 @@ String PostsShowView(Post model, {Map<String, dynamic> viewData = const {}}) {
   res += ''' <div class="content">''';
   res += '''${sanitize(model.content)}''';
   res +=
-      '''</div> <div class="comments-wrapper"> <div id="comments-form"> <button class="btn btn-primary" onclick="loadCommentsForm()">Оставить комментарий!</button> </div> </div> <div id="comments"> ''';
+      '''</div> <div class="comments-wrapper"> <div id="comments-form"> <button class="btn btn-primary" onclick="loadCommentsForm(''';
+  res += '''${sanitize(model.id)}''';
+  res +=
+      ''')">Оставить комментарий!</button> </div> </div> <div id="comments"> ''';
   var length = model.comments?.length ?? 0;
   if (length > 0) {
     res += ''' <h4>Комментарии</h4> ''';
