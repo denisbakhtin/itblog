@@ -1,8 +1,13 @@
 lib/config.json
 lib/release.db
+lib/debug.db
+lib/main
 node_modules
 itblog
+itblog.service
 .dart_tool
+.vscode
 pubspec.lock
+notes.txt
 .packages
 TODO

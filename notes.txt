@@ -1,4 +1,0 @@
-Switch to org mode later??
-
-* Use M-. M-? to jump to definition / find references
-* Use M-, to jump back
