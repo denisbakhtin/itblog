@@ -1,3 +1,5 @@
+import 'package:html/parser.dart';
+
 import 'data.dart';
 
 class Comment {
@@ -21,7 +23,29 @@ class Comment {
   String get editUrl => "/admin/comments/edit/$id";
   String get deleteUrl => "/admin/comments/delete/$id";
 
-  String get excerpt => '';
+  String get plainName {
+    const limit = 150;
+    final plainText =
+        parse(parse(userName).body?.text).documentElement?.text ?? '';
+    return plainText.length > limit
+        ? plainText.substring(0, limit) + '...'
+        : plainText;
+  }
+
+  String get excerpt {
+    const limit = 150;
+    final plainText =
+        parse(parse(content).body?.text).documentElement?.text ?? '';
+    return plainText.length > limit
+        ? plainText.substring(0, limit) + '...'
+        : plainText;
+  }
+
+  String get plainContent {
+    final plainText =
+        parse(parse(content).body?.text).documentElement?.text ?? '';
+    return plainText;
+  }
 
   factory Comment.fromMap(Map<String, dynamic> map) {
     return Comment(

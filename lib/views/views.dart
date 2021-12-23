@@ -62,27 +62,34 @@ String CommentsFormView(Comment model,
     {Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
+  viewData['title'] = 'Создание / Редактирование Комментария';
   res +=
-      ''' <div class="main-content" role="main"> <form method="post"> <fieldset> <legend>''';
+      ''' <div class="main-content" role="main"> <form method="post"> <h3>''';
   res += '''${sanitize(viewData["title"])}''';
-  res += '''</legend> ''';
+  res += '''</h3> ''';
   res += '''${PartialSharedMessagesView(viewData: viewData)}''';
   res += ''' <input type="hidden" name="id" value="''';
   res += '''${sanitize(model.id)}''';
   res +=
-      '''" > <label for="content">Content</label> <textarea name="content" id="content">''';
+      '''" > <label for="content">Содержание</label> <textarea name="content" id="content">''';
   res += '''${sanitize(model.content)}''';
-  res += '''</textarea> <label for="post_id">Post: ''';
-  res += '''${sanitize(model.post)}''';
-  res += '''?.title</label> <label for="user_name">Пользователь: ''';
-  res += '''${sanitize(model.userName)}''';
+  res += '''</textarea> ''';
+  if (model.post != null) {
+    res += ''' <label for="post_id">Пост: <a href="''';
+    res += '''${sanitize(model.post!.url)}''';
+    res += '''">''';
+    res += '''${sanitize(model.post!.title)}''';
+    res += '''</a></label> ''';
+  }
+  res += ''' <label for="user_name">Пользователь: ''';
+  res += '''${sanitize(model.plainName)}''';
   res +=
-      '''</label> <input id="published" name="published" type="checkbox" value="1" ''';
+      '''</label> <div class="d-flex mb-10"> <input id="published" name="published" type="checkbox" value="1" ''';
   if (model.published == 1) {
     res += '''checked''';
   }
   res +=
-      ''' > <label for="published">Опубликовать</label> <button type="submit" class="btn btn-primary">Отправить</button> <a class="btn btn-secondary" href="/admin/comments">Отмена</a> </fieldset> </form> </div>''';
+      '''> <label for="published">Опубликовать</label> </div> <button type="submit" class="btn btn-primary">Отправить</button> <a class="btn btn-secondary" href="/admin/comments">Отмена</a> </form> </div> ''';
   return LayoutDashboardView(res, viewData: viewData);
 }
 
@@ -100,7 +107,7 @@ String CommentsIndexView(List<Comment> model,
     res += ''' <tr> <td class="shrink">''';
     res += '''${sanitize(comment.id)}''';
     res += '''</td> <td>''';
-    res += '''${sanitize(comment.userName)}''';
+    res += '''${sanitize(comment.plainName)}''';
     res += '''</td> <td>''';
     res += '''${sanitize(comment.excerpt)}''';
     res += '''</td> <td class="shrink"> ''';
@@ -110,7 +117,7 @@ String CommentsIndexView(List<Comment> model,
       res += '''${PartialSharedMdiMinusView(viewData: viewData)}''';
     }
     res += ''' </td> <td class="shrink"> <a href="''';
-    res += '''${sanitize(comment.id)}''';
+    res += '''${sanitize(comment.url)}''';
     res += '''" class="btn btn-secondary">''';
     res += '''${PartialSharedMdiEyeView(viewData: viewData)}''';
     res += '''</a> <a href="''';
@@ -129,27 +136,15 @@ String CommentsIndexView(List<Comment> model,
   return LayoutDashboardView(res, viewData: viewData);
 }
 
-String PartialCommentsPublicFormView(Post model,
+String PartialCommentsPublicFormView(Comment model,
     {Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
-  res += ''' <div class="public-comment"> ''';
-  res += '''${PartialSharedMessagesView(viewData: viewData)}''';
-  var name = getOauthName();
-  if (name.isNotEmpty) {
-    res +=
-        ''' <form method="post" action="/new_comment"> <input type="hidden" name="post_id" value="''';
-    res += '''${sanitize(model.id)}''';
-    res +=
-        '''"> <input type="hidden" name="published" value="1"> <input type="hidden" name="user_name" value="''';
-    res += '''${sanitize(name)}''';
-    res +=
-        '''"> <textarea name="content" class="form-control" placeholder="Введите ваш комментарий" id="content"></textarea> <button type="submit" class="btn btn-primary">Отправить</button> </form> ''';
-  } else {
-    res +=
-        ''' <div class="text-center"> <p>Войдите с помощью учетной записи Гугл</p> <a class="btn btn-primary" href="/oauthgooglelogin">Войти</a> </div> ''';
-  }
-  res += ''' </div> ''';
+  res +=
+      ''' <form method="post" action="/comments/new"> <input type="hidden" name="post_id" value="''';
+  res += '''${sanitize(model.postId)}''';
+  res +=
+      '''"> <input type="text" name="user_name" placeholder="Представьтесь" required> <textarea name="content" placeholder="Введите ваш комментарий" id="content" required></textarea> <button type="submit" class="btn btn-primary">Отправить</button> </form> ''';
   return res;
 }
 
@@ -222,14 +217,14 @@ String Errors400View(String model, {Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   res +=
-      ''' <div class="error text-center"> <h1>400 ошибка</h1> <div class="description"> ''';
+      ''' <div id="main-column"> <div class="error text-center"> <h1>400 ошибка</h1> <div class="description"> ''';
   if (model.isNotEmpty) {
     res += '''${sanitize(model)}''';
   } else {
     res += ''' Похоже, плохой запрос! ''';
   }
   res +=
-      ''' </div> <div class="mt-2"> <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> </div> </div> ''';
+      ''' </div> <div class="mt-2"> <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> </div> </div> </div> ''';
   return LayoutView(res, viewData: viewData);
 }
 
@@ -237,7 +232,7 @@ String Errors403View({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   res +=
-      '''<div class="error text-center"> <h1>403 Ошибка</h1> <div class="description"> Похоже, доступ запрещен! </div> <div class="mt-2"> <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> </div> </div> ''';
+      '''<div id="main-column"> <div class="error text-center"> <h1>403 Ошибка</h1> <div class="description"> Похоже, доступ запрещен! </div> <div class="mt-2"> <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> </div> </div> </div> ''';
   return LayoutView(res, viewData: viewData);
 }
 
@@ -245,7 +240,7 @@ String Errors404View({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   res +=
-      '''<div class="error text-center"> <h1>404 Ошибка</h1> <div class="description"> Похоже, страница не найдена! </div> <div class="mt-2"> <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> </div> </div> ''';
+      '''<div id="main-column"> <div class="error text-center"> <h1>404 Ошибка</h1> <div class="description"> Похоже, страница не найдена! </div> <div class="mt-2"> <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> </div> </div> </div> ''';
   return LayoutView(res, viewData: viewData);
 }
 
@@ -253,14 +248,14 @@ String Errors500View(String model, {Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
   res +=
-      ''' <div class="error text-center"> <h1>500 Ошибка</h1> <div class="description"> ''';
+      ''' <div id="main-column"> <div class="error text-center"> <h1>500 Ошибка</h1> <div class="description"> ''';
   if (model != null && model.isNotEmpty) {
     res += '''${sanitize(model)}''';
   } else {
     res += ''' Похоже, что-то пошло не так! ''';
   }
   res +=
-      ''' </div> <div class="mt-2"> <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> </div> </div> ''';
+      ''' </div> <div class="mt-2"> <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> </div> </div> </div> ''';
   return LayoutView(res, viewData: viewData);
 }
 
@@ -680,20 +675,23 @@ String PostsShowView(Post model, {Map<String, dynamic> viewData = const {}}) {
   res += '''${PartialPostsInfoView(model, viewData: viewData)}''';
   res += ''' <div class="content">''';
   res += '''${sanitize(model.content)}''';
-  res += '''</div> <!-- <div id="comments"> <h4>Оставьте комментарий</h4> ''';
-  res += '''${PartialCommentsPublicFormView(model, viewData: viewData)}''';
+  res +=
+      '''</div> <div class="comments-wrapper"> <div id="comments-form"> <button class="btn btn-primary" onclick="loadCommentsForm()">Оставить комментарий!</button> </div> </div> <div id="comments"> ''';
   var length = model.comments?.length ?? 0;
+  if (length > 0) {
+    res += ''' <h4>Комментарии</h4> ''';
+  }
   for (var i = 0; i < length; i++) {
     var comment = model.comments![i];
-    res += ''' <div class="comment card card-body" id="comment-''';
+    res += ''' <div class="comment" id="comment-''';
     res += '''${sanitize(comment.id)}''';
     res += '''"> <h6>''';
-    res += '''${sanitize(comment.userName)}''';
+    res += '''${sanitize(comment.plainName)}''';
     res += '''</h6> <div class="comment-content"> ''';
-    res += '''${sanitize(comment.content)}''';
+    res += '''${sanitize(comment.plainContent)}''';
     res += ''' </div> </div> ''';
   }
-  res += ''' </div> --> </div> ''';
+  res += ''' </div> </div> ''';
   return LayoutView(res, viewData: viewData);
 }
 

@@ -4,14 +4,7 @@ import 'package:itblog/models/posts_tags.dart';
 import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-import 'comment.dart';
 import 'data.dart';
-import 'page.dart';
-import 'post.dart';
-import 'tag.dart';
-import 'user.dart';
-import 'subscriber.dart';
-import 'mailing.dart';
 
 const postsPerPage = 10;
 
@@ -208,8 +201,9 @@ class DB {
           [id]);
       post.tags = List.from(t.map((row) => Tag.fromMap(row)));
 
-      final c =
-          _select("SELECT * FROM comments WHERE post_id = ? ORDER BY id", [id]);
+      final c = _select(
+          "SELECT * FROM comments WHERE post_id = ? and published = 1 ORDER BY id",
+          [id]);
       post.comments = List.from(c.map((row) => Comment.fromMap(row)));
     }
     return post;
@@ -320,10 +314,15 @@ class DB {
     return comments;
   }
 
-  Comment comment(int id) {
+  Comment comment(int id, {bool loadRelations = false}) {
     final result = _select("SELECT * FROM comments WHERE id = ?", [id]);
     if (result.isEmpty) throw NotFoundException();
     Comment comment = Comment.fromMap(result.first);
+
+    if (loadRelations) {
+      comment.post = post(comment.postId);
+    }
+
     return comment;
   }
 
@@ -339,15 +338,11 @@ class DB {
   }
 
   int updateComment(Comment comment) {
-    return _execute(
-        "UPDATE comments SET content=?, published=?, post_id=?, user_name=? WHERE id=?",
-        [
-          comment.content,
-          comment.published,
-          comment.postId,
-          comment.userName,
-          comment.id,
-        ]);
+    return _execute("UPDATE comments SET content=?, published=? WHERE id=?", [
+      comment.content,
+      comment.published,
+      comment.id,
+    ]);
   }
 
   int deleteComment(int id) {

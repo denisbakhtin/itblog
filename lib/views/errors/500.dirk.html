@@ -1,15 +1,17 @@
 @type String
 
-<div class="error text-center">
-  <h1>500 Ошибка</h1>
-  <div class="description">
-    @if (model != null && model.isNotEmpty) {
-      @model
-    } else {
-      Похоже, что-то пошло не так!
-    }
-  </div>
-  <div class="mt-2">
-    <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> 
+<div id="main-column">
+  <div class="error text-center">
+    <h1>500 Ошибка</h1>
+    <div class="description">
+      @if (model != null && model.isNotEmpty) {
+        @model
+      } else {
+        Похоже, что-то пошло не так!
+      }
+    </div>
+    <div class="mt-2">
+      <a class="btn btn-secondary" onclick="window.history.back();" href="#">Назад</a> 
+    </div>
   </div>
 </div>

@@ -13,21 +13,27 @@
 
   @renderPartial("posts/_info", model)
   <div class="content">@model.content</div>
+
+  <div class="comments-wrapper">
+    <div id="comments-form">
+      <button class="btn btn-primary" onclick="loadCommentsForm()">Оставить
+        комментарий!</button>
+    </div>
+  </div>
   
-  <!--
   <div id="comments">
-    <h4>Оставьте комментарий</h4>
-    @renderPartial("comments/_public_form", model)
     @{var length = model.comments?.length ?? 0;}
+    @if (length > 0) {
+      <h4>Комментарии</h4>
+    }
     @for(var i = 0; i < length; i++) {
       @{var comment = model.comments![i];}
-      <div class="comment card card-body" id="comment-@comment.id">
-        <h6>@comment.userName</h6>
+      <div class="comment" id="comment-@comment.id">
+        <h6>@comment.plainName</h6>
         <div class="comment-content">
-          @comment.content
+          @comment.plainContent
         </div>
       </div>
     }
   </div>
-  -->
 </div>

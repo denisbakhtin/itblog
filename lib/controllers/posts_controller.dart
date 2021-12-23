@@ -52,8 +52,11 @@ class PostsController {
       try {
         final post = await db.post(toInt(id), loadRelations: true);
         var vd = viewData(request);
-        if (post.published == 0 || post.url != request.requestedUri.path) {
+        if (post.published == 0) {
           throw NotFoundException();
+        }
+        if (post.url != request.requestedUri.path) {
+          return Response.movedPermanently(post.url);
         }
         return Response.ok(PostsShowView(
           post,

@@ -22,7 +22,7 @@
         @{var comment = model[i];}
         <tr>
           <td class="shrink">@comment.id</td>
-          <td>@comment.userName</td>
+          <td>@comment.plainName</td>
           <td>@comment.excerpt</td>
           <td class="shrink">
             @if (comment.published == 1) {
@@ -32,7 +32,7 @@
             }
           </td>
           <td class="shrink">
-            <a href="@comment.id" class="btn btn-secondary">@renderPartial("shared/_mdi_eye")</a>
+            <a href="@comment.url" class="btn btn-secondary">@renderPartial("shared/_mdi_eye")</a>
             <a href="@comment.editUrl" class="btn btn-primary">@renderPartial("shared/_mdi_pencil")</a>
             <form class="inline-block" action="@comment.deleteUrl" method="post">
               <button type="button" class="btn btn-danger" onclick="((confirm('Вы уверены?')) ? this.form.submit() : null);">@renderPartial("shared/_mdi_delete")</button>

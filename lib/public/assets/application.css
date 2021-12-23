@@ -15,6 +15,8 @@
     --breakpoint-xl: 1200px;
     --border-radius: 4px;
     --border-color: #ddd;
+    --code-bg: #ddd;
+    --code-color: #222;
     --post-info-bg: #f9f9f9;
     --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -32,7 +34,7 @@ html {
 body {
     color: #303030;
     font-size: 16px;
-    line-height: 23px;
+    line-height: 26px;
     font-weight: 300;
     background: #fff;
     font-style: normal;
@@ -337,10 +339,11 @@ nav ul {
 .dashboard-body .navbar {
     padding-left: 0;
     padding-right: 20px;
+    background: #333;
 }
 
-.dashboard-body .navbar {
-    background: #eee !important;
+.dashboard-body .navbar a {
+  color: #eee;
 }
 
 .dashboard-body .navbar .container-fluid {
@@ -381,52 +384,19 @@ nav ul {
     padding: 30px 20px 20px 20px;
 }
 
-
-.dashboard-body .navbar {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.dashboard-body .navbar .nav-item {
-    text-transform: uppercase;
-    font-weight: 500;
-}
-
-.dashboard-body .navbar .nav-link {
-    transition: all 0.3s ease;
-    color: #000;
-}
-
-.dashboard-body .navbar .nav-link.active,
-.dashboard-body .navbar .nav-link:hover,
-.dashboard-body .navbar .nav-link:focus {
-    color: var(--primary);
-}
-
-.navbar-dashboard {
-    background-color: #eee;
-}
-
-.navbar-dashboard .navbar-brand {
-    width: 210px;
-    color: #333;
-    background-color: #eee;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.navbar-dashboard .navbar-brand:hover {
-    color: #555;
-    background-color: #eee;
-}
-
 .dashboard-body label {
     display: block;
     margin-bottom: 10px;
 }
-.dashboard-body input, .dashboard-body textarea, .dashboard-body select {
+form input, form textarea, form select {
     display: block;
     width: 100%;
     margin-bottom: 15px;
+}
+.form-inline input, .form-inline textarea, .form-inline select {
+    display: inline-block;
+    width: auto;
+    margin-bottom: 0;
 }
 
 .post-preview {
@@ -487,11 +457,6 @@ nav ul {
     margin-bottom: 5px;
 }
 
-.auth-card input {
-    margin-bottom: 15px;
-    width: 100%;
-}
-
 #ck-content {
     display: none;
 }
@@ -502,6 +467,10 @@ nav ul {
 
 .ck-body-wrapper {
     z-index:10000;
+}
+
+.ck.ck-editor {
+  margin-bottom: 15px!important;
 }
 
 .btn {
@@ -565,17 +534,19 @@ input[type="checkbox"] {
     color: #fff;
 }
 
+#comments-form {
+  margin: 15px 0;
+}
+
 .comment {
     margin-bottom: 20px;
+    padding: 10px 15px;
+    background: #efefef;
+    border-radius: 4px;
 }
 
 .comment .text-muted {
     font-weight: normal;
-}
-
-.comment .card {
-    padding: 10px;
-    border: none;
 }
 
 .public-comment {
@@ -648,6 +619,7 @@ h3,
 h4,
 .h4 {
     font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 h5,
@@ -794,6 +766,7 @@ strong,
 
 .select2-container {
     width: 100% !important;
+    margin-bottom: 15px;
 }
 
 .select2-container input {
@@ -805,6 +778,7 @@ strong,
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .error h1 {
@@ -828,9 +802,15 @@ strong,
     margin-bottom: 3rem !important;
 }
 
+p > code {
+    background: var(--code-bg);
+    color: var(--code-color);
+    padding: 0 4px;
+    border-radius: 4px;
+}
 pre {
-    background: #ddd;
-    color: #222;
+    background: var(--code-bg);
+    color: var(--code-color);
     padding: 15px;
     border-radius: 4px;
     font-weight: bold;

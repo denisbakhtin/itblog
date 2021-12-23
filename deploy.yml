@@ -33,6 +33,12 @@
         src: /home/tabula/dart/itblog/lib/main
         dest: /home/tabula/itblog/main
 
+    # too slow
+    #- name: copy assets to remote host
+    #  copy:
+    #    src: /home/tabula/dart/itblog/lib/public/assets
+    #    dest: /home/tabula/itblog/lib/public/
+
     - name: copy application.js to remote host
       copy:
         src: /home/tabula/dart/itblog/lib/public/assets/application.js

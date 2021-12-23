@@ -8,8 +8,18 @@ class CommentsController {
   Router get router {
     final router = Router();
 
-    router.get('/new/<postId>', (Request request, String postId) async {
-      throw Error404();
+    router.get('/form/<postId>', (Request request, String postId) async {
+      return Response.ok(
+          PartialCommentsPublicFormView(Comment(postId: toInt(postId))));
+    });
+
+    router.post('/new', (Request request) async {
+      final db = Injector.appInstance.get<DB>();
+      final form = request.context['postParams'] as Map<String, dynamic>;
+      final comment = Comment.fromMap(form)..published = 0;
+      db.createComment(comment);
+      return Response.movedPermanently(
+          Post(id: comment.postId, slug: 'abc').url);
     });
 
     return router;
@@ -43,7 +53,7 @@ class AdminCommentsController {
     router.get('/edit/<id>', (Request request, String id) async {
       final db = Injector.appInstance.get<DB>();
       try {
-        final comment = db.comment(toInt(id));
+        final comment = db.comment(toInt(id), loadRelations: true);
         var vd = viewData(request);
         return Response.ok(CommentsFormView(comment, viewData: vd));
       } on NotFoundException {

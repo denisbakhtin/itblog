@@ -1,26 +1,32 @@
 @import 'package:itblog/models/data.dart';
 @type Comment
 @layout layout_dashboard
+@{
+   viewData['title'] = 'Создание / Редактирование Комментария';
+}
 
 <div class="main-content" role="main">
   <form method="post">
-    <fieldset>
-      <legend>@(viewData["title"])</legend>
-      @renderPartial("shared/_messages")
-      <input type="hidden" name="id" value="@model.id" >
-      
-      <label for="content">Content</label>
-      <textarea name="content" id="content">@model.content</textarea>
+    <h3>@(viewData["title"])</h3>
+    @renderPartial("shared/_messages")
+    <input type="hidden" name="id" value="@model.id" >
+    
+    <label for="content">Содержание</label>
+    <textarea name="content" id="content">@model.content</textarea>
 
-      <label for="post_id">Post: @model.post?.title</label>
+    @if (model.post != null) {
+      <label for="post_id">Пост: <a
+           href="@(model.post!.url)">@(model.post!.title)</a></label>
+    }
 
-      <label for="user_name">Пользователь: @model.userName</label>
+    <label for="user_name">Пользователь: @model.plainName</label>
 
-      <input id="published" name="published" type="checkbox" value="1" @if (model.published == 1) {checked} >
+    <div class="d-flex mb-10">
+      <input id="published" name="published" type="checkbox" value="1" @if (model.published == 1) {checked}>
       <label for="published">Опубликовать</label>
+    </div>
 
-      <button type="submit" class="btn btn-primary">Отправить</button>
-      <a class="btn btn-secondary" href="/admin/comments">Отмена</a>
-    </fieldset>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+    <a class="btn btn-secondary" href="/admin/comments">Отмена</a>
   </form>
 </div>
