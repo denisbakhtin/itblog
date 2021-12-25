@@ -25,6 +25,7 @@ class Post {
       this.comments = const []});
 
   DateTime get created => DateTime.parse(createdAt);
+  String get createdSitemap => createdAt.split(' ').first;
   String get url => "/posts/$id/$slug";
   static String get indexUrl => "/admin/posts";
   static String get pubIndexUrl => "/posts";

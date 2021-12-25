@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:itblog/config/config.dart';
 import 'package:itblog/models/data.dart';
+import 'package:path/path.dart';
 
 import 'http/shelf.dart';
 
@@ -82,6 +85,59 @@ List<Pagination> getPaginator(int postsCount, {int currentPage = 1}) {
         title: '>>', url: '${Post.pubIndexUrl}?page=${currentPage + 1}'));
   }
   return result;
+}
+
+Future buildSitemapXML() async {
+  final db = Injector.appInstance.get<DB>();
+  final header = '''<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">''';
+  final footer = '''</urlset>''';
+  String postTemplate(Post post) {
+    return '''<url>
+      <loc>http://www.itblog.website${post.url}</loc>
+      <lastmod>${post.createdSitemap}</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.9</priority>
+   </url>''';
+  }
+
+  String blogTemplate() {
+    return '''<url>
+      <loc>http://www.itblog.website/posts</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+   </url>''';
+  }
+
+  String tagTemplate(Tag tag) {
+    return '''<url>
+      <loc>http://www.itblog.website${tag.url}</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+   </url>''';
+  }
+
+  String pageTemplate(Page page) {
+    return '''<url>
+      <loc>http://www.itblog.website${page.url}</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.5</priority>
+   </url>''';
+  }
+
+  final posts = db.posts(published: 1);
+  String result = header;
+  for (final p in posts) {
+    result += postTemplate(p);
+  }
+  result += blogTemplate();
+  final pages = db.pages(published: 1);
+  for (final p in pages) {
+    result += pageTemplate(p);
+  }
+  result += footer;
+  final _path = join(Directory.current.path, 'lib', 'public', 'sitemap.xml');
+  await File(_path).writeAsString(result, flush: true);
 }
 
 class Error400 implements Exception {}

@@ -117,8 +117,9 @@ class DB {
 
   //_____________ PAGES ____________________
 
-  List<Page> pages() {
-    final result = _select("SELECT * FROM pages ORDER BY id");
+  List<Page> pages({int? published}) {
+    final result = _select(
+        "SELECT * FROM pages ${published != null ? 'WHERE published=' + published.toString() : ''} ORDER BY id");
     List<Page> pages = List.from(result.map((row) => Page.fromMap(row)));
     return pages;
   }

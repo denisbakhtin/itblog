@@ -3,6 +3,7 @@ lib/release.db
 lib/debug.db
 lib/main
 lib/public/uploads/
+lib/public/google843f42465b7708e2.html
 node_modules
 itblog
 itblog.service

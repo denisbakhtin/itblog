@@ -56,6 +56,7 @@ class AdminPagesController {
       final form = request.context['postParams'] as Map<String, dynamic>;
       final page = Page.fromMap(form);
       db.createPage(page);
+      buildSitemapXML();
       return Response.movedPermanently(Page.indexUrl);
     });
 
@@ -77,12 +78,14 @@ class AdminPagesController {
       final form = request.context['postParams'] as Map<String, dynamic>;
       final page = Page.fromMap(form);
       db.updatePage(page);
+      buildSitemapXML();
       return Response.movedPermanently(Page.indexUrl);
     });
 
     router.post('/delete/<id>', (Request request, String id) async {
       final db = Injector.appInstance.get<DB>();
       db.deletePage(toInt(id));
+      buildSitemapXML();
       return Response.movedPermanently(Page.indexUrl);
     });
 

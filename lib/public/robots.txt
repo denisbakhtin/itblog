@@ -1,2 +1,5 @@
+Host: www.itblog.website
 User-agent: *
 Allow: /
+
+Sitemap: http://www.itblog.website/sitemap.xml
