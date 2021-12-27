@@ -4,6 +4,8 @@ lib/debug.db
 lib/main
 lib/public/uploads/
 lib/public/google843f42465b7708e2.html
+lib/public/yandex_faea992a700111b2.html
+lib/public/sitemap.xml
 node_modules
 itblog
 itblog.service

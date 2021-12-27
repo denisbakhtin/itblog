@@ -51,13 +51,13 @@ class PostsController {
       final db = Injector.appInstance.get<DB>();
       try {
         final post = await db.post(toInt(id), loadRelations: true);
-        var vd = viewData(request);
         if (post.published == 0) {
           throw NotFoundException();
         }
         if (post.url != request.requestedUri.path) {
           return Response.movedPermanently(post.url);
         }
+        var vd = viewData(request);
         return Response.ok(PostsShowView(
           post,
           viewData: vd

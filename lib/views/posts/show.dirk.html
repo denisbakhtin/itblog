@@ -4,6 +4,7 @@
 @renderPartial("shared/_breadcrumbs", model.breadcrumbs)
 	
 <div id="main-column">
+  @renderPartial("shared/_messages")
   <h1>
     @model.title
     @if (viewData['isAuthenticated'] ?? false) {

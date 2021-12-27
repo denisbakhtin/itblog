@@ -662,7 +662,9 @@ String PostsShowView(Post model, {Map<String, dynamic> viewData = const {}}) {
   viewData = Map.from(viewData);
   res +=
       '''${PartialSharedBreadcrumbsView(model.breadcrumbs, viewData: viewData)}''';
-  res += ''' <div id="main-column"> <h1> ''';
+  res += ''' <div id="main-column"> ''';
+  res += '''${PartialSharedMessagesView(viewData: viewData)}''';
+  res += ''' <h1> ''';
   res += '''${sanitize(model.title)}''';
   if (viewData['isAuthenticated'] ?? false) {
     res += ''' <a class="btn btn-outline-primary" href="''';
@@ -910,11 +912,11 @@ String PartialSharedMdiWebView({Map<String, dynamic> viewData = const {}}) {
 String PartialSharedMessagesView({Map<String, dynamic> viewData = const {}}) {
   String res = '';
   viewData = Map.from(viewData);
-  var messages = getSessionMessages();
-  for (var i = 0; i < messages.length; i++) {
-    res += ''' <div class="alert alert-danger col-sm-12">''';
-    res += '''${sanitize(messages)}''';
-    res += '''[i]</div> ''';
+  var message = viewData['message'];
+  if (message != null) {
+    res += ''' <div class="session-message">''';
+    res += '''${sanitize(message)}''';
+    res += '''</div> ''';
   }
   return res;
 }

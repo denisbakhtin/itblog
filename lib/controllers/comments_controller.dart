@@ -18,6 +18,7 @@ class CommentsController {
       final form = request.context['postParams'] as Map<String, dynamic>;
       final comment = Comment.fromMap(form)..published = 0;
       db.createComment(comment);
+      setMessage(request, 'Ваш комментарий будет опубликован после проверки.');
       return Response.movedPermanently(
           Post(id: comment.postId, slug: 'abc').url);
     });

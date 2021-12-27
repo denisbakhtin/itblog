@@ -1,20 +1,26 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:itblog/config/config.dart';
 import 'package:itblog/models/data.dart';
 import 'package:path/path.dart';
+import 'package:shelf_secure_cookie/shelf_secure_cookie.dart';
 
 import 'http/shelf.dart';
 
-Map<String, dynamic> viewData(Request request) => {
-      'hideSidebar': false,
-      'context': request.context,
-      'isAuthenticated': request.context['user'] != null,
-      'user': request.context['user'],
-      'path': request.requestedUri.path,
-      'name': Injector.appInstance.get<Config>().siteName,
-      'isDebug': Injector.appInstance.get<Config>().mode == "debug",
-    };
+Map<String, dynamic> viewData(Request request) {
+  final vd = {
+    'hideSidebar': false,
+    'context': request.context,
+    'isAuthenticated': request.context['user'] != null,
+    'user': request.context['user'],
+    'path': request.requestedUri.path,
+    'name': Injector.appInstance.get<Config>().siteName,
+    'isDebug': Injector.appInstance.get<Config>().mode == "debug",
+    'message': getMessage(request),
+  };
+  return vd;
+}
 
 String getOauthName() {
   return '';
@@ -31,10 +37,6 @@ List<Tag> getTags() {
 
 DateTime now() {
   return DateTime.now();
-}
-
-List<String> getSessionMessages() {
-  return [];
 }
 
 bool isSignupEnabled() {
@@ -138,6 +140,29 @@ Future buildSitemapXML() async {
   result += footer;
   final _path = join(Directory.current.path, 'lib', 'public', 'sitemap.xml');
   await File(_path).writeAsString(result, flush: true);
+}
+
+void setMessage(Request request, String message) {
+  final cookies = request.context['cookies'] as CookieParser;
+  cookies.set('message', base64Url.encode(utf8.encode(message)), path: '/');
+}
+
+String? getMessage(Request request) {
+  final cookies = request.context['cookies'] as CookieParser;
+  final message = cookies.get('message')?.value;
+  if (message != null) {
+    //tell browser to delete it
+    cookies.set(
+      'message',
+      '',
+      path: '/',
+      expires: DateTime.now().add(-Duration(days: 30)),
+      maxAge: -Duration(days: 30).inSeconds,
+    );
+  }
+  final decodedMessage =
+      message != null ? utf8.decode(base64Url.decode(message)) : null;
+  return decodedMessage;
 }
 
 class Error400 implements Exception {}

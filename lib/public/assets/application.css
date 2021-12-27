@@ -834,3 +834,11 @@ pre {
 .mb-10 {
     margin-bottom: 10px;
 }
+
+.session-message {
+    padding: 10px 15px;
+    background: var(--info);
+    border-radius: var(--border-radius);
+    color: #fff;
+    margin-bottom: 1em;
+}
