@@ -842,3 +842,12 @@ pre {
     color: #fff;
     margin-bottom: 1em;
 }
+
+blockquote {
+  border-left: 5px solid var(--primary);
+  margin: 0;
+  padding: 5px 0 5px 30px;
+  color: #999;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
