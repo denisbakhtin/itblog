@@ -39,6 +39,11 @@
     #    src: /home/tabula/dart/itblog/lib/public/assets
     #    dest: /home/tabula/itblog/lib/public/
 
+    - name: copy config.json to remote host
+      copy:
+        src: /home/tabula/dart/itblog/lib/config.json
+        dest: /home/tabula/itblog/lib/config.json
+
     - name: copy application.js to remote host
       copy:
         src: /home/tabula/dart/itblog/lib/public/assets/application.js
