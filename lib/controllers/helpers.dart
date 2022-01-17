@@ -27,7 +27,7 @@ String getOauthName() {
 }
 
 String getSiteName() {
-  return 'IT Блог';
+  return Injector.appInstance.get<Config>().siteName;
 }
 
 List<Tag> getTags() {

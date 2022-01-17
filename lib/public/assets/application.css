@@ -815,6 +815,7 @@ pre {
     border-radius: 4px;
     font-weight: bold;
     line-height: 15px;
+    overflow-x: scroll;
 }
 
 .text-primary {

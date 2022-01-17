@@ -11,3 +11,4 @@ export 'auth.dart';
 export 'subscriber.dart';
 export 'mailing.dart';
 export 'pagination.dart';
+export 'posts_tags.dart';
