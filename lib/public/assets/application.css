@@ -815,7 +815,12 @@ pre {
     border-radius: 4px;
     font-weight: bold;
     line-height: 15px;
-    overflow-x: scroll;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
 }
 
 .text-primary {
@@ -851,4 +856,38 @@ blockquote {
   color: #999;
   font-weight: bold;
   margin-bottom: 15px;
+}
+
+.related-posts {
+  display: flex;
+  flex-direction: row;
+}
+.related-posts a {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 33%;
+  height: 200px;
+  background-size: cover;
+  margin-right: 15px;
+}
+.related-posts a div {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  background: rgba(255,255,255, 0.7);
+  color: #333;
+  font-weight: bold;
+}
+@media only screen and (max-width: 649px) {
+  .related-posts {
+    flex-direction: column;
+  }
+  .related-posts a {
+    width: 100%;
+    margin-bottom: 15px;
+    margin-right: 0;
+  }
 }

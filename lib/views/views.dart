@@ -820,6 +820,8 @@ String PartialPostsPreviewView(Post model,
   res += '''${sanitize(model.url)}''';
   res += '''"> <img src="''';
   res += '''${sanitize(model.getImage())}''';
+  res += '''" alt="''';
+  res += '''${sanitize(model.title)}''';
   res += '''" /> </a> <div class="excerpt">''';
   res += '''${sanitize(model.excerpt)}''';
   res += '''</div> </div> ''';
@@ -896,8 +898,23 @@ String PostsShowView(Post model, {Map<String, dynamic> viewData = const {}}) {
   res += '''${PartialPostsInfoView(model, viewData: viewData)}''';
   res += ''' <div class="content">''';
   res += '''${sanitize(model.content)}''';
+  res += '''</div> ''';
+  final related = model.related();
+  if (related.isNotEmpty) {
+    res += ''' <h3>Прочитайте также</h3> <div class="related-posts"> ''';
+    for (var r in related) {
+      res += ''' <a href="''';
+      res += '''${sanitize(r.url)}''';
+      res += '''" style="background-image: url(''';
+      res += '''${sanitize(r.getImage())}''';
+      res += ''');"> <div>''';
+      res += '''${sanitize(r.title)}''';
+      res += '''</div> </a> ''';
+    }
+    res += ''' </div> ''';
+  }
   res +=
-      '''</div> <div class="comments-wrapper"> <div id="comments-form"> <button class="btn btn-primary" onclick="loadCommentsForm(''';
+      ''' <div class="comments-wrapper"> <div id="comments-form"> <button class="btn btn-primary" onclick="loadCommentsForm(''';
   res += '''${sanitize(model.id)}''';
   res +=
       ''')">Оставить комментарий!</button> </div> </div> <div id="comments"> ''';

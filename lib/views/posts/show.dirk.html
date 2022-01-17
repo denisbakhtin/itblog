@@ -15,6 +15,18 @@
   @renderPartial("posts/_info", model)
   <div class="content">@model.content</div>
 
+  @{final related = model.related();}
+  @if (related.isNotEmpty) {
+    <h3>Прочитайте также</h3>
+    <div class="related-posts">
+      @for(var r in related) {
+        <a href="@r.url" style="background-image: url(@r.getImage());">
+          <div>@r.title</div>
+        </a>
+      }
+    </div>
+  }
+
   <div class="comments-wrapper">
     <div id="comments-form">
       <button class="btn btn-primary" onclick="loadCommentsForm(@(model.id))">Оставить

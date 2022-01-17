@@ -191,6 +191,37 @@ class DB {
     return posts;
   }
 
+  List<Post> relatedPosts(int id) {
+    const count = 3;
+    final tpids = _select(
+        '''select distinct post_id from posts_tags where tag_id in (select tag_id
+        from posts_tags where post_id = ?) and post_id != ?''', [id, id]);
+    if (tpids.isEmpty) return [];
+    final pids = tpids.map((r) => toInt(r['post_id'])).toList();
+    final prev = pids.where((p) => p < id).toList();
+    final next = pids.where((p) => p > id).toList();
+    final List<int> res = [];
+    //the idea is to take one next and 2 prevs. But if any of the lists is
+    //lacking, fill with others
+    if (next.isNotEmpty) {
+      res.add(next.first);
+      next.removeAt(0);
+    }
+    while (res.length < count && prev.isNotEmpty) {
+      res.add(prev.last);
+      prev.removeLast();
+    }
+    while (res.length < count && next.isNotEmpty) {
+      res.add(next.first);
+      next.removeAt(0);
+    }
+
+    final result = _select(
+        "SELECT * FROM posts WHERE published=1 and id in (${res.join(',')}) ORDER BY id desc");
+    List<Post> posts = List.from(result.map((row) => Post.fromMap(row)));
+    return posts;
+  }
+
   Post post(int id, {bool loadRelations = false}) {
     final result = _select("SELECT * FROM posts WHERE id = ?", [id]);
     if (result.isEmpty) throw NotFoundException();

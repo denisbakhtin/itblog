@@ -1,3 +1,5 @@
+import 'package:itblog/controllers/http/shelf.dart';
+
 import 'data.dart';
 import 'package:html/parser.dart';
 
@@ -49,6 +51,7 @@ class Post {
     return reg.firstMatch(content)?.group(1) ?? '';
   }
 
+  List<Post> related() => Injector.appInstance.get<DB>().relatedPosts(id);
   factory Post.fromMap(Map<String, dynamic> map) {
     return Post(
       id: toInt(map['id']),
